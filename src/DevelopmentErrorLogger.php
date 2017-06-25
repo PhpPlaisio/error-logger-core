@@ -109,7 +109,7 @@ class DevelopmentErrorLogger implements ErrorLogger
 
     echo '<style>';
     echo file_get_contents(__DIR__.'/../assets'.'/css/reset.css');
-    echo file_get_contents(__DIR__.'/../assets'.'/css/exception.css');
+    echo file_get_contents(__DIR__.'/../assets'.'/css/error.css');
     echo file_get_contents(__DIR__.'/../assets'.'/css/dracula.css');
     echo '</style>';
 
@@ -145,9 +145,9 @@ class DevelopmentErrorLogger implements ErrorLogger
     foreach ($args as $key => $value)
     {
       $count++;
-      if ($count>=5)
+      if ($count>=7)
       {
-        if ($count>5)
+        if ($count>7)
         {
           unset($args[$key]);
         }
@@ -205,7 +205,7 @@ class DevelopmentErrorLogger implements ErrorLogger
       {
         $tmp = Html::generateElement('span', ['class' => 'string'], $key);
         $tmp .= ' => ';
-        $tmp .= (strpos($key, 'password')!==false) ? $args[$key] : str_repeat('*', 12);
+        $tmp .= (strpos($key, 'password')===false) ? $args[$key] : str_repeat('*', 12);
 
         $args[$key] = $tmp;
       }
@@ -303,7 +303,7 @@ class DevelopmentErrorLogger implements ErrorLogger
   {
     echo '<p class="file">';
 
-    echo Html::generateElement('span', ['class' => 'number'], $number);
+    echo Html::generateElement('span', ['class' => 'level'], $number);
 
     echo Html::generateElement('span', ['class' => 'file'], $item['file'].'('.$item['line'].'):');
 

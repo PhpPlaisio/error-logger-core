@@ -7,19 +7,21 @@ body
   margin:      1em 4em;
 }
 
-h2
+h1, h2, h3
 {
   color:         red;
-  font-size:     200%;
   margin-bottom: .5em;
   line-height:   100%;
 }
 
-h3
+h1
 {
-  color:         red;
-  font-size:     200%;
-  margin-bottom: .5em;
+  font-size: 250%;
+}
+
+h2, h3
+{
+  font-size: 200%;
 }
 
 .message
@@ -45,9 +47,9 @@ h3
 
 .source
 {
-  line-height:   125%;
+  line-height:   100%;
   margin:        0.5em 0;
-  font:          normal 11pt Menlo, Consolas, "Lucida Console", Monospace;
+  font:          normal 10pt Menlo, Consolas, "Lucida Console", Monospace;
   border:        1px solid #EEEEEE;
   border-radius: 6px;
   width:         100%;
@@ -99,10 +101,14 @@ code
   background-color: rgba(255, 255, 255, 0.1) !important;
 }
 
-.markup .error,
-.markup .error:hover
+.markup .error
 {
   background-color: rgba(200, 0, 0, 0.5) !important;
+}
+
+.markup .error:hover
+{
+  background-color: transparent !important;
 }
 
 /*--------------------------------------------------------------------------------------------------------------------*/
@@ -114,7 +120,7 @@ code
   margin: 2em 0 2em 2em;
 }
 
-.trace .number
+.trace .level
 {
   text-align: right;
   width:      2em;
@@ -126,42 +132,35 @@ code
 /**
  * Argument types.
  */
-.comment
+.class
 {
-  color:      #808080;
-  font-style: italic;
+  color: #FF9933
+}
+
+.function
+{
+  color: #D0C310;
 }
 
 .keyword
 {
-  color: #000080;
-}
-
-.number
-{
-  color: #6896ba;
+  color: #3311BB;
 }
 
 .string
 {
-  color: #00AA00;
+  color: #69D025;
 }
 
-.symbol, .char
+.number
 {
-  color:      #505050;
-  background: #D0EDED;
+  color: #11AABB;
+}
+
+.unknown
+{
+  color:      #F80C12;
   font-style: italic;
-}
-
-.phpdoc
-{
-  text-decoration: underline;
-}
-
-.variable
-{
-  color: #AA0000;
 }
 
 /*--------------------------------------------------------------------------------------------------------------------*/
