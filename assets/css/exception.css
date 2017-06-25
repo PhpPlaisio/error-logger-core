@@ -1,0 +1,170 @@
+/*--------------------------------------------------------------------------------------------------------------------*/
+body
+{
+  font-family: Verdana, sans-serif;
+  font-size:   12px;
+  line-height: 100%;
+  margin:      1em 4em;
+}
+
+h2
+{
+  color:         red;
+  font-size:     200%;
+  margin-bottom: .5em;
+  line-height:   100%;
+}
+
+h3
+{
+  color:         red;
+  font-size:     200%;
+  margin-bottom: .5em;
+}
+
+.message
+{
+  color:         #000000;
+  padding:       1em;
+  font-size:     11pt;
+  background:    #F3F3F3;
+  border-radius: 10px;
+  margin-bottom: 1em;
+  line-height:   160%;
+}
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+/**
+ * Source stuff.
+ */
+
+.file
+{
+  font-weight: bold;
+}
+
+.source
+{
+  line-height:   125%;
+  margin:        0.5em 0;
+  font:          normal 11pt Menlo, Consolas, "Lucida Console", Monospace;
+  border:        1px solid #EEEEEE;
+  border-radius: 6px;
+  width:         100%;
+  position:      relative;
+}
+
+.source ol
+{
+  list-style: decimal inside;
+  padding:    0;
+}
+
+.lines,
+.markup
+{
+  padding: 0.5em;
+  color:   white;
+}
+
+.lines
+{
+  display:          table-cell;
+  float:            left;
+  background-color: #2B2B2B;
+}
+
+code
+{
+  display: table-cell;
+}
+
+.markup
+{
+  position:         absolute;
+  top:              0;
+  left:             0;
+  width:            100%;
+  background-color: transparent;
+  z-index:          100;
+}
+
+.markup ol
+{
+  padding-right: 0.5em;
+}
+
+.markup li:hover
+{
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.markup .error,
+.markup .error:hover
+{
+  background-color: rgba(200, 0, 0, 0.5) !important;
+}
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+/**
+ * Trace stuff.
+ */
+.trace
+{
+  margin: 2em 0 2em 2em;
+}
+
+.trace .number
+{
+  text-align: right;
+  width:      2em;
+  padding:    0.5em 0.5em 0.5em 0;
+
+}
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+/**
+ * Argument types.
+ */
+.comment
+{
+  color:      #808080;
+  font-style: italic;
+}
+
+.keyword
+{
+  color: #000080;
+}
+
+.number
+{
+  color: #6896ba;
+}
+
+.string
+{
+  color: #00AA00;
+}
+
+.symbol, .char
+{
+  color:      #505050;
+  background: #D0EDED;
+  font-style: italic;
+}
+
+.phpdoc
+{
+  text-decoration: underline;
+}
+
+.variable
+{
+  color: #AA0000;
+}
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+/**
+ *
+ */
