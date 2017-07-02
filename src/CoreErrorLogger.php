@@ -114,13 +114,13 @@ abstract class CoreErrorLogger implements ErrorLogger
     fwrite($this->handle, '<title>Exception</title>');
 
     fwrite($this->handle, '<style>');
-    fwrite($this->handle, file_get_contents(__DIR__.'/../assets'.'/css/reset.css'));
-    fwrite($this->handle, file_get_contents(__DIR__.'/../assets'.'/css/error.css'));
-    fwrite($this->handle, file_get_contents(__DIR__.'/../assets'.'/css/dracula.css'));
+    fwrite($this->handle, file_get_contents(__DIR__.'/../assets/css/reset.css'));
+    fwrite($this->handle, file_get_contents(__DIR__.'/../assets/css/error.css'));
+    fwrite($this->handle, file_get_contents(__DIR__.'/../assets/css/dracula.css'));
     fwrite($this->handle, '</style>');
 
     fwrite($this->handle, '<script>');
-    fwrite($this->handle, file_get_contents(__DIR__.'/../assets'.'/js/highlight.pack.js'));
+    fwrite($this->handle, file_get_contents(__DIR__.'/../assets/js/highlight.pack.js'));
     fwrite($this->handle, '</script>');
     fwrite($this->handle, '<script>hljs.initHighlightingOnLoad();</script>');
     fwrite($this->handle, '</head><body>');
@@ -204,11 +204,11 @@ abstract class CoreErrorLogger implements ErrorLogger
       }
       elseif (is_resource($value))
       {
-        $args[$key] = '<span class="keyword">resource</span>';
+        $args[$key] = Html::generateElement('span', ['class' => 'keyword'], get_resource_type($value));
       }
       elseif (is_numeric($value))
       {
-        $args[$key] = '<span class="number">'.$value.'</span>';
+        $args[$key] = Html::generateElement('span', ['class' => 'number'], $value);
       }
       else
       {
@@ -319,11 +319,17 @@ abstract class CoreErrorLogger implements ErrorLogger
 
     fwrite($this->handle, Html::generateElement('span', ['class' => 'level'], $number));
 
-    fwrite($this->handle, Html::generateElement('span', ['class' => 'file'], $item['file'].'('.$item['line'].'):'));
+    if (isset($item['file']))
+    {
+      fwrite($this->handle, Html::generateElement('span', ['class' => 'file'], $item['file'].'('.$item['line'].'):'));
+    }
 
     $this->echoCallable($item);
 
-    $this->echoFileSnippet($item['file'], $item['line']);
+    if (isset($item['file']))
+    {
+      $this->echoFileSnippet($item['file'], $item['line']);
+    }
 
     fwrite($this->handle, '</p>');
   }
