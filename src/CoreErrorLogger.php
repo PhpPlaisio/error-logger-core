@@ -2,6 +2,7 @@
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Abc\ErrorLogger;
 
+use SetBased\Abc\Debug\VarDumper;
 use SetBased\Abc\Helper\Html;
 
 /**
@@ -10,6 +11,7 @@ use SetBased\Abc\Helper\Html;
  */
 abstract class CoreErrorLogger implements ErrorLogger
 {
+  //--------------------------------------------------------------------------------------------------------------------
   protected static $errorNames = [E_COMPILE_ERROR     => 'PHP Compile Error',
                                   E_COMPILE_WARNING   => 'PHP Compile Warning',
                                   E_CORE_ERROR        => 'PHP Core Error',
@@ -34,17 +36,50 @@ abstract class CoreErrorLogger implements ErrorLogger
   protected $handle;
 
   /**
+   * The variables to be dumped in the log.
+   *
+   * @var array|null
+   */
+  private $dump;
+
+  /**
    * The number of source lines shown.
    *
    * @var int
    */
   private $numberOfSourceLines = 24;
 
+  /**
+   * If true scalar references to values must be traced.
+   *
+   * @var bool
+   */
+  private $scalarReferences;
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Main function for dumping.
+   *
+   * @param mixed $dump             The variables for dumping.
+   * @param bool  $scalarReferences If true scalar references to values must be traced.
+   *
+   * @api
+   * @since 1.0.0
+   */
+  public function dumpVars($dump, $scalarReferences = false)
+  {
+    $this->dump             = $dump;
+    $this->scalarReferences = $scalarReferences;
+  }
+
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Logs an error.
    *
    * @param \Throwable $throwable The error to be logged.
+   *
+   * @api
+   * @since 1.0.0
    */
   public function logError($throwable)
   {
@@ -56,13 +91,25 @@ abstract class CoreErrorLogger implements ErrorLogger
 
       $this->echoErrorLog($throwable);
 
+      $this->echoVarDump();
+
       $this->echoPageTrailer();
+
+      $this->closeStream();
     }
-    catch(\Throwable $throwable)
+    catch (\Throwable $throwable)
     {
       // Nothing to do.
     }
   }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Closes the stream to were the error log is written written.
+   *
+   * @return void
+   */
+  abstract protected function closeStream();
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
@@ -285,7 +332,7 @@ abstract class CoreErrorLogger implements ErrorLogger
     fwrite($this->handle, '</ol>');
     fwrite($this->handle, '</div>');
 
-    // The code (without tags).
+    // The code as plain text (without markup and tags).
     fwrite($this->handle, '<pre><code class="php">');
     for ($i = $first; $i<=$last; $i++)
     {
@@ -294,6 +341,7 @@ abstract class CoreErrorLogger implements ErrorLogger
     }
     fwrite($this->handle, '</code></pre>');
 
+    // div for markup.
     fwrite($this->handle, '<div class="markup">');
     fwrite($this->handle, Html::generateTag('ol', ['start' => $first]));
     for ($i = $first; $i<=$last; $i++)
@@ -342,10 +390,14 @@ abstract class CoreErrorLogger implements ErrorLogger
    */
   private function echoTraceStack($throwable)
   {
+    $trace = $throwable->getTrace();
+
+    // Return immediately if the trace is empty.
+    if (empty($trace)) return;
+
     fwrite($this->handle, '<div class="trace">');
     fwrite($this->handle, '<h2>Stack Trace</h2>');
 
-    $trace = $throwable->getTrace();
     $level = count($trace);
     foreach ($trace as $item)
     {
@@ -353,6 +405,22 @@ abstract class CoreErrorLogger implements ErrorLogger
     }
 
     fwrite($this->handle, '</div>');
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Echos variables.
+   */
+  private function echoVarDump()
+  {
+    // Return immediately if the are nof variables to dump.
+    if ($this->dump===null) return;
+
+    fwrite($this->handle, Html::generateElement('h2', [], 'VarDump'));
+
+    $varDumper         = new VarDumper();
+    $varDumper->writer = new HtmlVarWriter($this->handle);
+    $varDumper->dump(null, $this->dump, $this->scalarReferences);
   }
 
   //--------------------------------------------------------------------------------------------------------------------

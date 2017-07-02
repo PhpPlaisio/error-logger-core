@@ -165,5 +165,45 @@ code
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 /**
- *
+ * Links
  */
+a:link, a:visited
+{
+  text-decoration: none;
+  color:           #0000CC;
+}
+
+a:hover
+{
+  text-decoration: underline;
+  color:           #FF0000;
+}
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+/**
+ * Var dump table
+ */
+table.var-dump
+{
+  margin:           -2px;
+  empty-cells:      show;
+  border-collapse:  separate;
+  border-spacing:   2px;
+  background-color: white;
+
+}
+
+table.var-dump table
+{
+  background-color: white;
+  border-collapse:  separate;
+  border-spacing:   2px;
+  margin:           -7px;
+}
+
+table.var-dump th,
+table.var-dump td
+{
+  padding:          5px;
+  background-color: #EFEFEF;
+}

@@ -28,7 +28,16 @@ class ProductionErrorLogger extends CoreErrorLogger
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Opens the stream to were the error log must be written.
+   * {@inheritdoc}
+   */
+  protected function closeStream()
+  {
+    fclose($this->handle);
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * {@inheritdoc}
    */
   protected function openStream()
   {
