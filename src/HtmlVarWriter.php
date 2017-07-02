@@ -108,7 +108,7 @@ class HtmlVarWriter implements VarWriter
    */
   public function writeFloat($id, $ref, &$value, $name)
   {
-    $this->writeScalar($id, $ref, $name, $value, 'number');
+    $this->writeScalar($id, $ref, $name, (string)$value, 'number');
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -117,7 +117,7 @@ class HtmlVarWriter implements VarWriter
    */
   public function writeInt($id, $ref, &$value, $name)
   {
-    $this->writeScalar($id, $ref, $name, $value, 'number');
+    $this->writeScalar($id, $ref, $name, (string)$value, 'number');
   }
 
   //--------------------------------------------------------------------------------------------------------------------
