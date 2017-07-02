@@ -323,9 +323,9 @@ class CoreErrorLoggerTest extends TestCase
     self::assertContains('<html ', $output);
     self::assertContains('</html>', $output);
 
-    self::assertRegExp('|<p class="file">.*/php-abc-error-logger-core/test/TestClassB\.php\(\d+\)</p>|', $output);
-    self::assertRegExp('|<span class="file">.*/php-abc-error-logger-core/test/TestClassA\.php\(\d+\):</span>|', $output);
-    self::assertRegExp('|<span class="file">.*/php-abc-error-logger-core/test/CoreErrorLoggerTest.php\(\d+\):</span>|', $output);
+    self::assertRegExp('|<p class="file">.*/test/TestClassB\.php\(\d+\)</p>|', $output);
+    self::assertRegExp('|<span class="file">.*/test/TestClassA\.php\(\d+\):</span>|', $output);
+    self::assertRegExp('|<span class="file">.*/test/CoreErrorLoggerTest.php\(\d+\):</span>|', $output);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
