@@ -206,7 +206,6 @@ class HtmlVarWriter implements VarWriter
   private function writeName($name, $id = null)
   {
     $title = null;
-    $class = null;
 
     if (is_int($name))
     {
