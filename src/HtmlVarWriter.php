@@ -51,7 +51,7 @@ class HtmlVarWriter implements VarWriter
   /**
    * {@inheritdoc}
    */
-  public function writeArrayClose($name)
+  public function writeArrayClose($id, $name)
   {
     if ($name!==null)
     {
@@ -133,11 +133,14 @@ class HtmlVarWriter implements VarWriter
   /**
    * {@inheritdoc}
    */
-  public function writeObjectClose()
+  public function writeObjectClose($id, $name, $class)
   {
-    fwrite($this->handle, '</table>');
-    fwrite($this->handle, '</td>');
-    fwrite($this->handle, '</tr>');
+    if ($name!==null)
+    {
+      fwrite($this->handle, '</table>');
+      fwrite($this->handle, '</td>');
+      fwrite($this->handle, '</tr>');
+    }
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -146,11 +149,14 @@ class HtmlVarWriter implements VarWriter
    */
   public function writeObjectOpen($id, $name, $class)
   {
-    fwrite($this->handle, '<tr>');
-    $this->writeName($name, $id);
-    fwrite($this->handle, '<td>');
-    fwrite($this->handle, Html::generateElement('div', ['class' => 'class'], $class).'<br/>');
-    fwrite($this->handle, '<table>');
+    if ($name!==null)
+    {
+      fwrite($this->handle, '<tr>');
+      $this->writeName($name, $id);
+      fwrite($this->handle, '<td>');
+      fwrite($this->handle, Html::generateElement('div', ['class' => 'class'], $class).'<br/>');
+      fwrite($this->handle, '<table>');
+    }
   }
 
   //--------------------------------------------------------------------------------------------------------------------
