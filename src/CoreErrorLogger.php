@@ -158,6 +158,7 @@ abstract class CoreErrorLogger implements ErrorLogger
     fwrite($this->handle, '<!DOCTYPE html>');
     fwrite($this->handle, '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">');
     fwrite($this->handle, '<head>');
+    fwrite($this->handle, Html::generateVoidElement('meta', ['charset' => Html::$encoding]));
     fwrite($this->handle, '<title>Exception</title>');
 
     fwrite($this->handle, '<style>');
