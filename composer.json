@@ -5,9 +5,9 @@
   "license": "MIT",
   "keywords": [
     "ABC-Framework",
-    "error",
-    "logger",
-    "core"
+    "Error",
+    "Logger",
+    "Core"
   ],
   "require": {
     "php": ">=7.0.0",
