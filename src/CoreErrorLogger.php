@@ -292,14 +292,14 @@ abstract class CoreErrorLogger implements ErrorLogger
    */
   private function echoCallable($item)
   {
-    if ($item['class']===null)
+    if (isset($item['class']))
     {
+      fwrite($this->handle, Html::generateElement('span', ['class' => 'class'], $item['class']));
+      fwrite($this->handle, '::');
       fwrite($this->handle, Html::generateElement('span', ['class' => 'function'], $item['function']));
     }
     else
     {
-      fwrite($this->handle, Html::generateElement('span', ['class' => 'class'], $item['class']));
-      fwrite($this->handle, '::');
       fwrite($this->handle, Html::generateElement('span', ['class' => 'function'], $item['function']));
     }
 
@@ -414,7 +414,7 @@ abstract class CoreErrorLogger implements ErrorLogger
    */
   private function echoVarDump()
   {
-    // Return immediately if the are nof variables to dump.
+    // Return immediately if the are no variables to dump.
     if ($this->dump===null) return;
 
     fwrite($this->handle, Html::generateElement('h2', [], 'VarDump'));
