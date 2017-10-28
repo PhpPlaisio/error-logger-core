@@ -2,8 +2,6 @@
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Abc\ErrorLogger\Test;
 
-use SetBased\Exception\ErrorException;
-
 /**
  * Just a class.
  */

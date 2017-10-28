@@ -19,7 +19,6 @@ class CoreErrorLoggerTest extends TestCase
   protected $errorLogger;
 
   //--------------------------------------------------------------------------------------------------------------------
-
   /**
    * {@inheritdoc}
    */
