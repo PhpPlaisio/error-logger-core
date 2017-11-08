@@ -419,8 +419,7 @@ abstract class CoreErrorLogger implements ErrorLogger
 
     fwrite($this->handle, Html::generateElement('h2', [], 'VarDump'));
 
-    $varDumper         = new VarDumper();
-    $varDumper->writer = new HtmlVarWriter($this->handle);
+    $varDumper = new VarDumper(new HtmlVarWriter($this->handle));
     $varDumper->dump(null, $this->dump, $this->scalarReferences);
   }
 
