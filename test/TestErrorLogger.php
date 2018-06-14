@@ -1,5 +1,5 @@
 <?php
-//----------------------------------------------------------------------------------------------------------------------
+
 namespace SetBased\Abc\ErrorLogger\Test;
 
 use SetBased\Abc\ErrorLogger\CoreErrorLogger;
@@ -16,7 +16,7 @@ class TestErrorLogger extends CoreErrorLogger
   /**
    * {@inheritdoc}
    */
-  protected function openStream()
+  protected function openStream(): void
   {
     $this->handle = fopen(self::$filename, 'wb');
   }
@@ -25,7 +25,7 @@ class TestErrorLogger extends CoreErrorLogger
   /**
    * {@inheritdoc}
    */
-  protected function closeStream()
+  protected function closeStream(): void
   {
     fclose($this->handle);
   }

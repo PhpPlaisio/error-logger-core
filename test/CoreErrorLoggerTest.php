@@ -1,5 +1,5 @@
 <?php
-//----------------------------------------------------------------------------------------------------------------------
+
 namespace SetBased\Abc\ErrorLogger\Test;
 
 use PHPUnit\Framework\TestCase;

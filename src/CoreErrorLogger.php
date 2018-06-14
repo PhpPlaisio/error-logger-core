@@ -1,5 +1,5 @@
 <?php
-//----------------------------------------------------------------------------------------------------------------------
+
 namespace SetBased\Abc\ErrorLogger;
 
 use SetBased\Abc\Debug\VarDumper;
@@ -66,7 +66,7 @@ abstract class CoreErrorLogger implements ErrorLogger
    * @api
    * @since 1.0.0
    */
-  public function dumpVars($dump, $scalarReferences = false)
+  public function dumpVars($dump, bool $scalarReferences = false): void
   {
     $this->dump             = $dump;
     $this->scalarReferences = $scalarReferences;
@@ -78,10 +78,12 @@ abstract class CoreErrorLogger implements ErrorLogger
    *
    * @param \Throwable $throwable The error to be logged.
    *
+   * @return void
+   *
    * @api
    * @since 1.0.0
    */
-  public function logError($throwable)
+  public function logError(\Throwable $throwable): void
   {
     try
     {
@@ -109,7 +111,7 @@ abstract class CoreErrorLogger implements ErrorLogger
    *
    * @return void
    */
-  abstract protected function closeStream();
+  abstract protected function closeStream(): void;
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
@@ -118,7 +120,7 @@ abstract class CoreErrorLogger implements ErrorLogger
    * @param \Throwable|null $throwable  The error.
    * @param bool            $isPrevious If true the exception is a previous exception.
    */
-  protected function echoErrorLog($throwable, $isPrevious = false)
+  protected function echoErrorLog(?\Throwable $throwable, bool $isPrevious = false): void
   {
     // Return immediately if there is not throwable.
     if ($throwable===null) return;
@@ -153,7 +155,7 @@ abstract class CoreErrorLogger implements ErrorLogger
   /**
    * Echos the XHTML document leader, i.e. the start html tag, the head element, and start body tag.
    */
-  protected function echoPageLeader()
+  protected function echoPageLeader(): void
   {
     fwrite($this->handle, '<!DOCTYPE html>');
     fwrite($this->handle, '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">');
@@ -178,7 +180,7 @@ abstract class CoreErrorLogger implements ErrorLogger
   /**
    * Echos the XHTML document trailer.
    */
-  protected function echoPageTrailer()
+  protected function echoPageTrailer(): void
   {
     fwrite($this->handle, '</body></html>');
   }
@@ -189,7 +191,7 @@ abstract class CoreErrorLogger implements ErrorLogger
    *
    * @return void
    */
-  abstract protected function openStream();
+  abstract protected function openStream(): void;
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
@@ -199,7 +201,7 @@ abstract class CoreErrorLogger implements ErrorLogger
    *
    * @return string
    */
-  private function argumentsToString($args)
+  private function argumentsToString(array $args): string
   {
     $isAssoc = ($args!==array_values($args));
 
@@ -290,7 +292,7 @@ abstract class CoreErrorLogger implements ErrorLogger
    *
    * @param array $item The trace stack item.
    */
-  private function echoCallable($item)
+  private function echoCallable(array $item): void
   {
     if (isset($item['class']))
     {
@@ -315,7 +317,7 @@ abstract class CoreErrorLogger implements ErrorLogger
    * @param string $filename The name of the file.
    * @param int    $line     The source line number.
    */
-  private function echoFileSnippet($filename, $line)
+  private function echoFileSnippet(string $filename, int $line): void
   {
     $lines = explode("\n", file_get_contents($filename));
     $first = max(1, $line - $this->numberOfSourceLines / 2);
@@ -362,7 +364,7 @@ abstract class CoreErrorLogger implements ErrorLogger
    * @param int   $number The item number.
    * @param array $item   The item of the trace stack.
    */
-  private function echoTraceItem($number, $item)
+  private function echoTraceItem(int $number, array $item): void
   {
     fwrite($this->handle, '<p class="file">');
 
@@ -389,7 +391,7 @@ abstract class CoreErrorLogger implements ErrorLogger
    *
    * @param \Throwable $throwable The throwable.
    */
-  private function echoTraceStack($throwable)
+  private function echoTraceStack(\Throwable $throwable): void
   {
     $trace = $throwable->getTrace();
 
@@ -412,7 +414,7 @@ abstract class CoreErrorLogger implements ErrorLogger
   /**
    * Echos variables.
    */
-  private function echoVarDump()
+  private function echoVarDump(): void
   {
     // Return immediately if the are no variables to dump.
     if ($this->dump===null) return;

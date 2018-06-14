@@ -1,5 +1,5 @@
 <?php
-//----------------------------------------------------------------------------------------------------------------------
+
 namespace SetBased\Abc\ErrorLogger;
 
 /**
@@ -21,7 +21,7 @@ class ProductionErrorLogger extends CoreErrorLogger
    *
    * @param string $path The path to the directory for storing error log files.
    */
-  public function __construct($path)
+  public function __construct(string $path)
   {
     $this->path = $path;
   }
@@ -30,7 +30,7 @@ class ProductionErrorLogger extends CoreErrorLogger
   /**
    * {@inheritdoc}
    */
-  protected function closeStream()
+  protected function closeStream(): void
   {
     fclose($this->handle);
   }
@@ -39,7 +39,7 @@ class ProductionErrorLogger extends CoreErrorLogger
   /**
    * {@inheritdoc}
    */
-  protected function openStream()
+  protected function openStream(): void
   {
     $filename     = $this->getFilename();
     $this->handle = fopen($filename, 'wb');
@@ -51,7 +51,7 @@ class ProductionErrorLogger extends CoreErrorLogger
    *
    * @return string
    */
-  private function getFilename()
+  private function getFilename(): string
   {
     $dateTime = new \DateTime();
 

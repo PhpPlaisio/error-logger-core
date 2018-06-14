@@ -1,5 +1,5 @@
 <?php
-//----------------------------------------------------------------------------------------------------------------------
+
 namespace SetBased\Abc\ErrorLogger;
 
 /**
@@ -12,7 +12,7 @@ class DevelopmentErrorLogger extends CoreErrorLogger
   /**
    * Opens output.
    */
-  protected function openStream()
+  protected function openStream(): void
   {
     $this->handle = fopen('php://output', 'wb');
   }
@@ -21,7 +21,7 @@ class DevelopmentErrorLogger extends CoreErrorLogger
   /**
    * {@inheritdoc}
    */
-  protected function closeStream()
+  protected function closeStream(): void
   {
     fclose($this->handle);
   }

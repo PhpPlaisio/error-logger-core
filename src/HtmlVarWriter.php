@@ -1,5 +1,5 @@
 <?php
-//----------------------------------------------------------------------------------------------------------------------
+
 namespace SetBased\Abc\ErrorLogger;
 
 use SetBased\Abc\Debug\VarWriter;
@@ -19,6 +19,7 @@ class HtmlVarWriter implements VarWriter
   protected $handle;
 
   //--------------------------------------------------------------------------------------------------------------------
+
   /**
    * Object constructor.
    *
@@ -33,7 +34,7 @@ class HtmlVarWriter implements VarWriter
   /**
    * Does nothing.
    */
-  public function start()
+  public function start(): void
   {
     fwrite($this->handle, '<table class="var-dump">');
   }
@@ -42,7 +43,7 @@ class HtmlVarWriter implements VarWriter
   /**
    * Does nothing.
    */
-  public function stop()
+  public function stop(): void
   {
     fwrite($this->handle, '</table>');
   }
@@ -51,7 +52,7 @@ class HtmlVarWriter implements VarWriter
   /**
    * {@inheritdoc}
    */
-  public function writeArrayClose($id, $name)
+  public function writeArrayClose(int $id, string $name): void
   {
     if ($name!==null)
     {
@@ -65,7 +66,7 @@ class HtmlVarWriter implements VarWriter
   /**
    * {@inheritdoc}
    */
-  public function writeArrayOpen($id, $name)
+  public function writeArrayOpen(int $id, string $name): void
   {
     if ($name!==null)
     {
@@ -81,7 +82,7 @@ class HtmlVarWriter implements VarWriter
   /**
    * {@inheritdoc}
    */
-  public function writeArrayReference($ref, $name)
+  public function writeArrayReference(int $ref, string $name): void
   {
     $html = Html::generateElement('span', ['class' => 'array'], 'array');
     $html .= ', ';
@@ -97,7 +98,7 @@ class HtmlVarWriter implements VarWriter
   /**
    * {@inheritdoc}
    */
-  public function writeBool($id, $ref, &$value, $name)
+  public function writeBool(?int $id, ?int $ref, bool &$value, string $name): void
   {
     $this->writeScalar($id, $ref, $name, ($value) ? 'true' : 'false', 'keyword');
   }
@@ -106,7 +107,7 @@ class HtmlVarWriter implements VarWriter
   /**
    * {@inheritdoc}
    */
-  public function writeFloat($id, $ref, &$value, $name)
+  public function writeFloat(?int $id, ?int $ref, float &$value, string $name): void
   {
     $this->writeScalar($id, $ref, $name, (string)$value, 'number');
   }
@@ -115,7 +116,7 @@ class HtmlVarWriter implements VarWriter
   /**
    * {@inheritdoc}
    */
-  public function writeInt($id, $ref, &$value, $name)
+  public function writeInt(?int $id, ?int $ref, int &$value, string $name): void
   {
     $this->writeScalar($id, $ref, $name, (string)$value, 'number');
   }
@@ -124,7 +125,7 @@ class HtmlVarWriter implements VarWriter
   /**
    * {@inheritdoc}
    */
-  public function writeNull($id, $ref, $name)
+  public function writeNull(?int $id, ?int $ref, string $name): void
   {
     $this->writeScalar($id, $ref, $name, 'null', 'keyword');
   }
@@ -133,7 +134,7 @@ class HtmlVarWriter implements VarWriter
   /**
    * {@inheritdoc}
    */
-  public function writeObjectClose($id, $name, $class)
+  public function writeObjectClose(int $id, string $name, string $class): void
   {
     if ($name!==null)
     {
@@ -147,7 +148,7 @@ class HtmlVarWriter implements VarWriter
   /**
    * {@inheritdoc}
    */
-  public function writeObjectOpen($id, $name, $class)
+  public function writeObjectOpen(int $id, string $name, string $class): void
   {
     if ($name!==null)
     {
@@ -163,7 +164,7 @@ class HtmlVarWriter implements VarWriter
   /**
    * {@inheritdoc}
    */
-  public function writeObjectReference($ref, $name, $class)
+  public function writeObjectReference(int $ref, string $name, string $class): void
   {
     $html = Html::generateElement('span', ['class' => 'class'], $class);
     $html .= ', ';
@@ -179,7 +180,7 @@ class HtmlVarWriter implements VarWriter
   /**
    * {@inheritdoc}
    */
-  public function writeResource($id, $ref, $name, $type)
+  public function writeResource(?int $id, ?int $ref, string $name, string $type): void
   {
     $this->writeScalar($id, $ref, $name, $type, 'keyword');
   }
@@ -188,7 +189,7 @@ class HtmlVarWriter implements VarWriter
   /**
    * {@inheritdoc}
    */
-  public function writeString($id, $ref, &$value, $name)
+  public function writeString(?int $id, ?int $ref, string &$value, ?string $name): void
   {
     $text  = mb_strimwidth($value, 0, 80, '...');
     $title = ($text!=$value) ? mb_strimwidth($value, 0, 512, '...') : null;
@@ -203,7 +204,7 @@ class HtmlVarWriter implements VarWriter
    * @param string   $name The name of the variable.
    * @param int|null $id   The ID of the value.
    */
-  private function writeName($name, $id = null)
+  private function writeName(string $name, ?int $id = null): void
   {
     $title = null;
 
@@ -243,7 +244,7 @@ class HtmlVarWriter implements VarWriter
    * @param string      $class The class of the value.
    * @param string|null $title The title for the value.
    */
-  private function writeScalar($id, $ref, $name, $text, $class, $title = null)
+  private function writeScalar(?int $id, ?int $ref, string $name, string $text, string $class, ?string $title = null)
   {
     $html = Html::generateElement('span', ['class' => $class, 'title' => $title], $text);
     if ($ref!==null)
