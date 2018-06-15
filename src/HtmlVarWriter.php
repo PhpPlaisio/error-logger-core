@@ -206,30 +206,37 @@ class HtmlVarWriter implements VarWriter
    */
   private function writeName(string $name, ?int $id = null): void
   {
-    $title = null;
-
-    if (is_int($name))
+    if ($name==='')
     {
-      $text  = $name;
-      $class = 'number';
+      fwrite($this->handle, Html::generateElement('th', ['class' => 'id', 'id' => $id], $id));
     }
     else
     {
-      $class = 'string';
-      $text  = mb_strimwidth($name, 0, 20, '...');
-      if ($text!=$name)
+      $title = null;
+
+      if (is_int($name))
       {
-        $title = mb_strimwidth($name, 0, 512, '...');
+        $text  = $name;
+        $class = 'number';
       }
+      else
+      {
+        $class = 'string';
+        $text  = mb_strimwidth($name, 0, 20, '...');
+        if ($text!=$name)
+        {
+          $title = mb_strimwidth($name, 0, 512, '...');
+        }
+      }
+
+      fwrite($this->handle, Html::generateElement('th', ['class' => 'id'], $id));
+
+      fwrite($this->handle, Html::generateElement('th',
+                                                  ['class' => $class,
+                                                   'id'    => $id,
+                                                   'title' => $title],
+                                                  $text));
     }
-
-    fwrite($this->handle, Html::generateElement('th', ['class' => 'id'], $id));
-
-    fwrite($this->handle, Html::generateElement('th',
-                                                ['class' => $class,
-                                                 'id'    => $id,
-                                                 'title' => $title],
-                                                $text));
   }
 
   //--------------------------------------------------------------------------------------------------------------------
