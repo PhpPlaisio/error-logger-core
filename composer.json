@@ -12,7 +12,7 @@
   "require": {
     "php": ">=7.1.0",
     "setbased/abc-error-logger": "^2.0.0",
-    "setbased/abc-html": "^1.3.0",
+    "setbased/abc-html": "^2.0.0",
     "setbased/abc-var-dumper": "^2.0.0",
     "setbased/abc-var-dumper-writer": "^2.0.0"
   },
