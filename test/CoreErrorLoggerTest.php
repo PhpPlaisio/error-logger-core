@@ -294,6 +294,34 @@ class CoreErrorLoggerTest extends TestCase
   /**
    * Tests a call to an undefined method is traced properly.
    */
+  public function testStdClass(): void
+  {
+    $std       = new \stdClass();
+    $std->foo  = 'bar'.'bar';
+    $std->spam = 'eggs';
+
+    try
+    {
+      throw new \LogicException('No problem');
+    }
+    catch (\Throwable $throwable)
+    {
+      $this->errorLogger->dumpVars(['std' => $std]);
+      $this->errorLogger->logError($throwable);
+    }
+
+    $output = $this->getOutput();
+
+    self::assertStringContainsString('<html ', $output);
+    self::assertStringContainsString('</html>', $output);
+
+   self::assertRegExp('/th.*foo.*th.*td.*barbar.*td/', $output);
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Tests a call to an undefined method is traced properly.
+   */
   public function testUndefinedMethod(): void
   {
     try

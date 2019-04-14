@@ -14,8 +14,8 @@
     "ext-mbstring": "*",
     "setbased/abc-error-logger": "^2.0.0",
     "setbased/abc-html": "^2.0.0",
-    "setbased/abc-var-dumper": "^2.0.0",
-    "setbased/abc-var-dumper-writer": "^2.0.0"
+    "setbased/abc-var-dumper": "^2.1.0",
+    "setbased/abc-var-dumper-writer": "^3.0.0"
   },
   "require-dev": {
     "phing/phing": "^2.0.0",

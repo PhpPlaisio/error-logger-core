@@ -20,7 +20,6 @@ class HtmlVarWriter implements VarWriter
   protected $handle;
 
   //--------------------------------------------------------------------------------------------------------------------
-
   /**
    * Object constructor.
    *
@@ -53,7 +52,7 @@ class HtmlVarWriter implements VarWriter
   /**
    * {@inheritdoc}
    */
-  public function writeArrayClose(int $id, string $name): void
+  public function writeArrayClose(int $id, $name): void
   {
     if ($name!==null)
     {
@@ -67,7 +66,7 @@ class HtmlVarWriter implements VarWriter
   /**
    * {@inheritdoc}
    */
-  public function writeArrayOpen(int $id, string $name): void
+  public function writeArrayOpen(int $id, $name): void
   {
     if ($name!==null)
     {
@@ -83,7 +82,7 @@ class HtmlVarWriter implements VarWriter
   /**
    * {@inheritdoc}
    */
-  public function writeArrayReference(int $ref, string $name): void
+  public function writeArrayReference(int $ref, $name): void
   {
     $html = Html::generateElement('span', ['class' => 'array'], 'array');
     $html .= ', ';
@@ -99,7 +98,7 @@ class HtmlVarWriter implements VarWriter
   /**
    * {@inheritdoc}
    */
-  public function writeBool(?int $id, ?int $ref, bool &$value, string $name): void
+  public function writeBool(?int $id, ?int $ref, bool &$value, $name): void
   {
     $this->writeScalar($id, $ref, $name, ($value) ? 'true' : 'false', 'keyword');
   }
@@ -108,7 +107,7 @@ class HtmlVarWriter implements VarWriter
   /**
    * {@inheritdoc}
    */
-  public function writeFloat(?int $id, ?int $ref, float &$value, string $name): void
+  public function writeFloat(?int $id, ?int $ref, float &$value, $name): void
   {
     $this->writeScalar($id, $ref, $name, (string)$value, 'number');
   }
@@ -117,7 +116,7 @@ class HtmlVarWriter implements VarWriter
   /**
    * {@inheritdoc}
    */
-  public function writeInt(?int $id, ?int $ref, int &$value, string $name): void
+  public function writeInt(?int $id, ?int $ref, int &$value, $name): void
   {
     $this->writeScalar($id, $ref, $name, (string)$value, 'number');
   }
@@ -126,7 +125,7 @@ class HtmlVarWriter implements VarWriter
   /**
    * {@inheritdoc}
    */
-  public function writeNull(?int $id, ?int $ref, string $name): void
+  public function writeNull(?int $id, ?int $ref, $name): void
   {
     $this->writeScalar($id, $ref, $name, 'null', 'keyword');
   }
@@ -135,7 +134,7 @@ class HtmlVarWriter implements VarWriter
   /**
    * {@inheritdoc}
    */
-  public function writeObjectClose(int $id, string $name, string $class): void
+  public function writeObjectClose(int $id, $name, string $class): void
   {
     if ($name!==null)
     {
@@ -149,7 +148,7 @@ class HtmlVarWriter implements VarWriter
   /**
    * {@inheritdoc}
    */
-  public function writeObjectOpen(int $id, string $name, string $class): void
+  public function writeObjectOpen(int $id, $name, string $class): void
   {
     if ($name!==null)
     {
@@ -165,11 +164,11 @@ class HtmlVarWriter implements VarWriter
   /**
    * {@inheritdoc}
    */
-  public function writeObjectReference(int $ref, string $name, string $class): void
+  public function writeObjectReference(int $ref, $name, string $class): void
   {
     $html = Html::generateElement('span', ['class' => 'class'], $class);
     $html .= ', ';
-    $html .= Html::generateElement('a', ['href' => '#'.$ref], 'see '.$ref);
+    $html .= Html::generateElement('a', ['href' => '#'.(string)$ref], 'see '.(string)$ref);
 
     fwrite($this->handle, '<tr>');
     $this->writeName($name);
@@ -181,7 +180,7 @@ class HtmlVarWriter implements VarWriter
   /**
    * {@inheritdoc}
    */
-  public function writeResource(?int $id, ?int $ref, string $name, string $type): void
+  public function writeResource(?int $id, ?int $ref, $name, string $type): void
   {
     $this->writeScalar($id, $ref, $name, $type, 'keyword');
   }
@@ -190,7 +189,7 @@ class HtmlVarWriter implements VarWriter
   /**
    * {@inheritdoc}
    */
-  public function writeString(?int $id, ?int $ref, string &$value, ?string $name): void
+  public function writeString(?int $id, ?int $ref, string &$value, $name): void
   {
     $text  = mb_strimwidth($value, 0, 80, '...');
     $title = ($text!=$value) ? mb_strimwidth($value, 0, 512, '...') : null;
@@ -202,14 +201,14 @@ class HtmlVarWriter implements VarWriter
   /**
    * Writes the name of a variable.
    *
-   * @param string   $name The name of the variable.
-   * @param int|null $id   The ID of the value.
+   * @param string|int|null $name The name of the variable.
+   * @param int|null        $id   The ID of the value.
    */
-  private function writeName(string $name, ?int $id = null): void
+  private function writeName($name, ?int $id = null): void
   {
-    if ($name==='')
+    if ($name===null || $name==='')
     {
-      fwrite($this->handle, Html::generateElement('th', ['class' => 'id', 'id' => $id], $id));
+      fwrite($this->handle, Html::generateElement('th', ['class' => 'id', 'id' => $id], (string)$id));
     }
     else
     {
@@ -217,20 +216,24 @@ class HtmlVarWriter implements VarWriter
 
       if (is_int($name))
       {
-        $text  = $name;
+        $text  = (string)$name;
         $class = 'number';
+      }
+      elseif (is_string($name))
+      {
+        $class = 'string';
+        $text  = mb_strimwidth((string)$name, 0, 20, '...');
+        if ($text!=$name)
+        {
+          $title = mb_strimwidth((string)$name, 0, 512, '...');
+        }
       }
       else
       {
-        $class = 'string';
-        $text  = mb_strimwidth($name, 0, 20, '...');
-        if ($text!=$name)
-        {
-          $title = mb_strimwidth($name, 0, 512, '...');
-        }
+        throw new \InvalidArgumentException(sprintf('$name has unexpected type %s', gettype($name)));
       }
 
-      fwrite($this->handle, Html::generateElement('th', ['class' => 'id'], $id));
+      fwrite($this->handle, Html::generateElement('th', ['class' => 'id'], (string)$id));
 
       fwrite($this->handle, Html::generateElement('th',
                                                   ['class' => $class,
@@ -244,15 +247,15 @@ class HtmlVarWriter implements VarWriter
   /**
    * Dumps a scalar value.
    *
-   * @param int|null    $id    The ID of the value.
-   * @param int|null    $ref   The ID of the value if the variable is a reference to a value that has been dumped
-   *                           already.
-   * @param string      $name  The name of the variable.
-   * @param string      $text  The text for displaying the value.
-   * @param string      $class The class of the value.
-   * @param string|null $title The title for the value.
+   * @param int|null        $id    The ID of the value.
+   * @param int|null        $ref   The ID of the value if the variable is a reference to a value that has been dumped
+   *                               already.
+   * @param string|int|null $name  The name of the variable.
+   * @param string          $text  The text for displaying the value.
+   * @param string          $class The class of the value.
+   * @param string|null     $title The title for the value.
    */
-  private function writeScalar(?int $id, ?int $ref, string $name, string $text, string $class, ?string $title = null)
+  private function writeScalar(?int $id, ?int $ref, $name, string $text, string $class, ?string $title = null)
   {
     $html = Html::generateElement('span', ['class' => $class, 'title' => $title], $text);
     if ($ref!==null)
