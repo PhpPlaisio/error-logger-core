@@ -11,6 +11,7 @@
   ],
   "require": {
     "php": ">=7.1.0",
+    "ext-mbstring": "*",
     "setbased/abc-error-logger": "^2.0.0",
     "setbased/abc-html": "^2.0.0",
     "setbased/abc-var-dumper": "^2.0.0",
