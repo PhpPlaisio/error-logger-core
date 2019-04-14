@@ -13,7 +13,7 @@ class TestClassA
    *
    * @param mixed $arg Just a argument.
    */
-  public function methodA($arg=null)
+  public function methodA($arg=null): void
   {
     $b = new TestClassB();
     $b->methodB($arg);

@@ -22,7 +22,7 @@ class CoreErrorLoggerTest extends TestCase
   /**
    * {@inheritdoc}
    */
-  public function setUp()
+  public function setUp(): void
   {
     parent::setUp();
 
@@ -33,7 +33,7 @@ class CoreErrorLoggerTest extends TestCase
   /**
    * Tests an object as argument is logged properly.
    */
-  public function testArgumentClass()
+  public function testArgumentClass(): void
   {
     try
     {
@@ -50,14 +50,14 @@ class CoreErrorLoggerTest extends TestCase
 
     $this->defaultAssertions($output);
 
-    self::assertContains('<span class="class">SetBased\Abc\ErrorLogger\Test\CoreErrorLoggerTest</span>', $output);
+    self::assertStringContainsString('<span class="class">SetBased\Abc\ErrorLogger\Test\CoreErrorLoggerTest</span>', $output);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Tests false as argument is logged properly.
    */
-  public function testArgumentFalse()
+  public function testArgumentFalse(): void
   {
     try
     {
@@ -74,14 +74,14 @@ class CoreErrorLoggerTest extends TestCase
 
     $this->defaultAssertions($output);
 
-    self::assertContains('<span class="keyword">false</span>', $output);
+    self::assertStringContainsString('<span class="keyword">false</span>', $output);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Tests a float as argument is logged properly.
    */
-  public function testArgumentFloat()
+  public function testArgumentFloat(): void
   {
     try
     {
@@ -98,14 +98,14 @@ class CoreErrorLoggerTest extends TestCase
 
     $this->defaultAssertions($output);
 
-    self::assertContains('<span class="number">3.14</span>', $output);
+    self::assertStringContainsString('<span class="number">3.14</span>', $output);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Tests an integer as argument is logged properly.
    */
-  public function testArgumentInt()
+  public function testArgumentInt(): void
   {
     try
     {
@@ -122,14 +122,14 @@ class CoreErrorLoggerTest extends TestCase
 
     $this->defaultAssertions($output);
 
-    self::assertContains('<span class="number">123456</span>', $output);
+    self::assertStringContainsString('<span class="number">123456</span>', $output);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Tests null as argument is logged properly.
    */
-  public function testArgumentNull()
+  public function testArgumentNull(): void
   {
     try
     {
@@ -146,14 +146,14 @@ class CoreErrorLoggerTest extends TestCase
 
     $this->defaultAssertions($output);
 
-    self::assertContains('(<span class="keyword">null</span>)', $output);
+    self::assertStringContainsString('(<span class="keyword">null</span>)', $output);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Tests a resource as argument is logged properly.
    */
-  public function testArgumentResource()
+  public function testArgumentResource(): void
   {
     try
     {
@@ -172,14 +172,14 @@ class CoreErrorLoggerTest extends TestCase
 
     $this->defaultAssertions($output);
 
-    self::assertContains('(<span class="keyword">stream</span>)', $output);
+    self::assertStringContainsString('(<span class="keyword">stream</span>)', $output);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Tests a string as argument is logged properly.
    */
-  public function testArgumentString()
+  public function testArgumentString(): void
   {
     try
     {
@@ -196,14 +196,14 @@ class CoreErrorLoggerTest extends TestCase
 
     $this->defaultAssertions($output);
 
-    self::assertContains('<span class="string">hello world</span>', $output);
+    self::assertStringContainsString('<span class="string">hello world</span>', $output);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Tests true as argument is logged properly.
    */
-  public function testArgumentTrue()
+  public function testArgumentTrue(): void
   {
     try
     {
@@ -220,14 +220,14 @@ class CoreErrorLoggerTest extends TestCase
 
     $this->defaultAssertions($output);
 
-    self::assertContains('<span class="keyword">true</span>', $output);
+    self::assertStringContainsString('<span class="keyword">true</span>', $output);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Tests an error is traced properly.
    */
-  public function testDivideByZero()
+  public function testDivideByZero(): void
   {
     try
     {
@@ -249,7 +249,7 @@ class CoreErrorLoggerTest extends TestCase
   /**
    * Tests an exception is traced properly.
    */
-  public function testException()
+  public function testException(): void
   {
     try
     {
@@ -271,7 +271,7 @@ class CoreErrorLoggerTest extends TestCase
   /**
    * Tests an error from a php function traced properly.
    */
-  public function testInternal()
+  public function testInternal(): void
   {
     try
     {
@@ -293,7 +293,7 @@ class CoreErrorLoggerTest extends TestCase
   /**
    * Tests a call to an undefined method is traced properly.
    */
-  public function testUndefinedMethod()
+  public function testUndefinedMethod(): void
   {
     try
     {
@@ -317,10 +317,10 @@ class CoreErrorLoggerTest extends TestCase
    *
    * @param string $output The output of the error logger.
    */
-  private function defaultAssertions($output)
+  private function defaultAssertions(string $output): void
   {
-    self::assertContains('<html ', $output);
-    self::assertContains('</html>', $output);
+    self::assertStringContainsString('<html ', $output);
+    self::assertStringContainsString('</html>', $output);
 
     self::assertRegExp('|<p class="file">.*/test/TestClassB\.php\(\d+\)</p>|', $output);
     self::assertRegExp('|<span class="file">.*/test/TestClassA\.php\(\d+\):</span>|', $output);
@@ -333,7 +333,7 @@ class CoreErrorLoggerTest extends TestCase
    *
    * @return string
    */
-  private function getOutput()
+  private function getOutput(): string
   {
     $output = file_get_contents(TestErrorLogger::$filename);
 
