@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace SetBased\Abc\ErrorLogger;
 
@@ -258,7 +259,7 @@ abstract class CoreErrorLogger implements ErrorLogger
       }
       elseif (is_numeric($value))
       {
-        $args[$key] = Html::generateElement('span', ['class' => 'number'], $value);
+        $args[$key] = Html::generateElement('span', ['class' => 'number'], (string)$value);
       }
       else
       {
@@ -275,7 +276,7 @@ abstract class CoreErrorLogger implements ErrorLogger
       }
       elseif ($isAssoc)
       {
-        $tmp = Html::generateElement('span', ['class' => 'number'], $key);
+        $tmp = Html::generateElement('span', ['class' => 'number'], (string)$key);
         $tmp .= ' => ';
         $tmp .= $args[$key];
 
@@ -368,7 +369,7 @@ abstract class CoreErrorLogger implements ErrorLogger
   {
     fwrite($this->handle, '<p class="file">');
 
-    fwrite($this->handle, Html::generateElement('span', ['class' => 'level'], $number));
+    fwrite($this->handle, Html::generateElement('span', ['class' => 'level'], (string)$number));
 
     if (isset($item['file']))
     {
