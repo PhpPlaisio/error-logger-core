@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace SetBased\Abc\ErrorLogger\Test;
+namespace Plaisio\ErrorLogger\Test;
 
 /**
  * Just a class.

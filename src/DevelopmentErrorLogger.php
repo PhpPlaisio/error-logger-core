@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace SetBased\Abc\ErrorLogger;
+namespace Plaisio\ErrorLogger;
 
 /**
  * An error logger for development purposes. It will show all information of the error on the user's screen. Use this

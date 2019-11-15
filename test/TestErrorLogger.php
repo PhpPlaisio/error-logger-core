@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace SetBased\Abc\ErrorLogger\Test;
+namespace Plaisio\ErrorLogger\Test;
 
-use SetBased\Abc\ErrorLogger\CoreErrorLogger;
+use Plaisio\ErrorLogger\CoreErrorLogger;
 
 /**
  * An error logger for testing purposes.

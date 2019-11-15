@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace SetBased\Abc\ErrorLogger;
+namespace Plaisio\ErrorLogger;
 
 /**
  * An error logger that can be safely used on production environments. All data is of the error log is written to a
@@ -51,6 +51,8 @@ class ProductionErrorLogger extends CoreErrorLogger
    * Returns the filename of the error log file.
    *
    * @return string
+   *
+   * @throws \Exception
    */
   private function getFilename(): string
   {

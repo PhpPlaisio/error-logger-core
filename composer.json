@@ -1,21 +1,20 @@
 {
-  "name": "setbased/abc-error-logger-core",
-  "description": "ABC-Framework: Core Error Logger",
-  "type": "library",
-  "license": "MIT",
+  "name": "plaisio/error-logger-core",
+  "description": "PhpPlaisio: Core Error Logger",
   "keywords": [
-    "ABC-Framework",
+    "PhpPlaisio",
     "Error",
     "Logger",
     "Core"
   ],
+  "license": "MIT",
   "require": {
     "php": ">=7.1.0",
     "ext-mbstring": "*",
-    "setbased/abc-error-logger": "^2.0.0",
-    "setbased/abc-html": "^2.0.0",
-    "setbased/abc-var-dumper": "^2.1.0",
-    "setbased/abc-var-dumper-writer": "^3.0.0"
+    "plaisio/error-logger": "^3.0.0",
+    "plaisio/html": "^3.0.0",
+    "plaisio/var-dumper": "^3.0.0",
+    "plaisio/var-dumper-writer": "^4.0.0"
   },
   "require-dev": {
     "phing/phing": "^2.0.0",
@@ -23,12 +22,12 @@
   },
   "autoload": {
     "psr-4": {
-      "SetBased\\Abc\\ErrorLogger\\": "src/"
+      "Plaisio\\ErrorLogger\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "SetBased\\Abc\\ErrorLogger\\Test\\": "test/"
+      "Plaisio\\ErrorLogger\\Test\\": "test/"
     }
   },
   "config": {

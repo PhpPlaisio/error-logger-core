@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace SetBased\Abc\ErrorLogger\Test;
+namespace Plaisio\ErrorLogger\Test;
 
 use PHPUnit\Framework\TestCase;
-use SetBased\Abc\ErrorLogger\CoreErrorLogger;
+use Plaisio\ErrorLogger\CoreErrorLogger;
 
 /**
  * Test cases for DevelopmentErrorLogger.
@@ -51,7 +51,7 @@ class CoreErrorLoggerTest extends TestCase
 
     $this->defaultAssertions($output);
 
-    self::assertStringContainsString('<span class="class">SetBased\Abc\ErrorLogger\Test\CoreErrorLoggerTest</span>', $output);
+    self::assertStringContainsString('<span class="class">Plaisio\ErrorLogger\Test\CoreErrorLoggerTest</span>', $output);
   }
 
   //--------------------------------------------------------------------------------------------------------------------

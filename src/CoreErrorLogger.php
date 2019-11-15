@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace SetBased\Abc\ErrorLogger;
+namespace Plaisio\ErrorLogger;
 
-use SetBased\Abc\Debug\VarDumper;
-use SetBased\Abc\Helper\Html;
+use Plaisio\Debug\VarDumper;
+use Plaisio\Helper\Html;
 
 /**
  * An abstract error logger that writes the error log in HTML format to a stream and any errors and exception during

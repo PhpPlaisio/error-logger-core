@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace SetBased\Abc\ErrorLogger;
+namespace Plaisio\ErrorLogger;
 
-use SetBased\Abc\Debug\VarWriter;
-use SetBased\Abc\Helper\Html;
+use Plaisio\Debug\VarWriter;
+use Plaisio\Helper\Html;
 
 /**
  * Writes a var dump in HTML to a stream.
