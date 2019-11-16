@@ -3,8 +3,7 @@
   "description": "PhpPlaisio: Core Error Logger",
   "keywords": [
     "PhpPlaisio",
-    "Error",
-    "Logger",
+    "Error Logger",
     "Core"
   ],
   "license": "MIT",
@@ -12,7 +11,7 @@
     "php": ">=7.1.0",
     "ext-mbstring": "*",
     "plaisio/error-logger": "^1.0.0",
-    "plaisio/html": "^1.0.0",
+    "plaisio/helper-html": "^1.0.0",
     "plaisio/var-dumper": "^1.0.0",
     "plaisio/var-dumper-writer": "^1.0.0"
   },
