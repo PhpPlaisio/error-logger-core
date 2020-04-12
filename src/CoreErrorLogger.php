@@ -307,7 +307,7 @@ abstract class CoreErrorLogger implements ErrorLogger
     }
 
     fwrite($this->handle, '(');
-    fwrite($this->handle, $this->argumentsToString($item['args']));
+    fwrite($this->handle, $this->argumentsToString($item['args'] ?? []));
     fwrite($this->handle, ')');
   }
 
