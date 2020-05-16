@@ -315,7 +315,7 @@ class CoreErrorLoggerTest extends TestCase
     self::assertStringContainsString('<html ', $output);
     self::assertStringContainsString('</html>', $output);
 
-   self::assertRegExp('/th.*foo.*th.*td.*barbar.*td/', $output);
+   self::assertMatchesRegularExpression('/th.*foo.*th.*td.*barbar.*td/', $output);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -351,9 +351,9 @@ class CoreErrorLoggerTest extends TestCase
     self::assertStringContainsString('<html ', $output);
     self::assertStringContainsString('</html>', $output);
 
-    self::assertRegExp('|<p class="file">.*/test/TestClassB\.php\(\d+\)</p>|', $output);
-    self::assertRegExp('|<span class="file">.*/test/TestClassA\.php\(\d+\):</span>|', $output);
-    self::assertRegExp('|<span class="file">.*/test/CoreErrorLoggerTest.php\(\d+\):</span>|', $output);
+    self::assertMatchesRegularExpression('|<p class="file">.*/test/TestClassB\.php\(\d+\)</p>|', $output);
+    self::assertMatchesRegularExpression('|<span class="file">.*/test/TestClassA\.php\(\d+\):</span>|', $output);
+    self::assertMatchesRegularExpression('|<span class="file">.*/test/CoreErrorLoggerTest.php\(\d+\):</span>|', $output);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
