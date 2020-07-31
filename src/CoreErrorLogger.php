@@ -259,7 +259,7 @@ abstract class CoreErrorLogger implements ErrorLogger
       }
       elseif (is_numeric($value))
       {
-        $args[$key] = Html::generateElement('span', ['class' => 'number'], (string)$value);
+        $args[$key] = Html::generateElement('span', ['class' => 'number'], $value);
       }
       else
       {
@@ -276,7 +276,7 @@ abstract class CoreErrorLogger implements ErrorLogger
       }
       elseif ($isAssoc)
       {
-        $tmp = Html::generateElement('span', ['class' => 'number'], (string)$key);
+        $tmp = Html::generateElement('span', ['class' => 'number'], $key);
         $tmp .= ' => ';
         $tmp .= $args[$key];
 
@@ -369,7 +369,7 @@ abstract class CoreErrorLogger implements ErrorLogger
   {
     fwrite($this->handle, '<p class="file">');
 
-    fwrite($this->handle, Html::generateElement('span', ['class' => 'level'], (string)$number));
+    fwrite($this->handle, Html::generateElement('span', ['class' => 'level'], $number));
 
     if (isset($item['file']))
     {

@@ -208,7 +208,7 @@ class HtmlVarWriter implements VarWriter
   {
     if ($name===null || $name==='')
     {
-      fwrite($this->handle, Html::generateElement('th', ['class' => 'id', 'id' => $id], (string)$id));
+      fwrite($this->handle, Html::generateElement('th', ['class' => 'id', 'id' => $id], $id));
     }
     else
     {
@@ -233,7 +233,7 @@ class HtmlVarWriter implements VarWriter
         throw new \InvalidArgumentException(sprintf('$name has unexpected type %s', gettype($name)));
       }
 
-      fwrite($this->handle, Html::generateElement('th', ['class' => 'id'], (string)$id));
+      fwrite($this->handle, Html::generateElement('th', ['class' => 'id'], $id));
 
       fwrite($this->handle, Html::generateElement('th',
                                                   ['class' => $class,
