@@ -56,27 +56,6 @@ class CoreErrorLoggerTest extends TestCase
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Tests an object as argument is logged properly.
-   */
-  public function testClassWithoutComment(): void
-  {
-    try
-    {
-      $c = new TestClassC();
-      count($c);
-    }
-    catch (\Throwable $throwable)
-    {
-      $this->errorLogger->logError($throwable);
-    }
-
-    $output = $this->getOutput();
-
-    self::assertStringContainsString('</html>', $output);
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
    * Tests false as argument is logged properly.
    */
   public function testArgumentFalse(): void
@@ -247,6 +226,27 @@ class CoreErrorLoggerTest extends TestCase
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Tests an object as argument is logged properly.
+   */
+  public function testClassWithoutComment(): void
+  {
+    try
+    {
+      $c = new TestClassC();
+      count($c);
+    }
+    catch (\Throwable $throwable)
+    {
+      $this->errorLogger->logError($throwable);
+    }
+
+    $output = $this->getOutput();
+
+    self::assertStringContainsString('</html>', $output);
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * Tests an error is traced properly.
    */
   public function testDivideByZero(): void
@@ -336,7 +336,7 @@ class CoreErrorLoggerTest extends TestCase
     self::assertStringContainsString('<html ', $output);
     self::assertStringContainsString('</html>', $output);
 
-   self::assertMatchesRegularExpression('/th.*foo.*th.*td.*barbar.*td/', $output);
+    self::assertMatchesRegularExpression('/th.*foo.*th.*td.*barbar.*td/', $output);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -359,6 +359,37 @@ class CoreErrorLoggerTest extends TestCase
     $output = $this->getOutput();
 
     $this->defaultAssertions($output);
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Tests an object with uninitialized non-nullable type property.
+   */
+  public function testUninitializedTypeProperty(): void
+  {
+    if (PHP_VERSION_ID<=70400)
+    {
+      static::markTestSkipped('No typed properties.');
+    }
+    else
+    {
+      $d = null;
+      try
+      {
+        $d = new TestClassD();
+        $d->exception();
+      }
+      catch (\Throwable $throwable)
+      {
+        $this->errorLogger->dumpVars([$d]);
+        $this->errorLogger->logError($throwable);
+      }
+
+      $output = $this->getOutput();
+
+      self::assertStringContainsString('<th class="string">qwerty</th>', $output);
+      self::assertStringContainsString('</html>', $output);
+    }
   }
 
   //--------------------------------------------------------------------------------------------------------------------

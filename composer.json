@@ -12,7 +12,7 @@
     "ext-mbstring": "*",
     "plaisio/error-logger": "^1.2",
     "plaisio/helper-html": "^1.2",
-    "plaisio/var-dumper": "^1.2.1",
+    "plaisio/var-dumper": "^1.2.2",
     "plaisio/var-dumper-writer": "^1.1.1"
   },
   "require-dev": {
