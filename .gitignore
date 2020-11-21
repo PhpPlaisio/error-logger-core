@@ -1,5 +1,7 @@
 /.idea/
 /.phpunit.result.cache
-/composer.lock
-/vendor/
 /bin/
+/composer.lock
+/test/coverage.xml
+/test/report/
+/vendor/

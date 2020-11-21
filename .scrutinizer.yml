@@ -1,4 +1,16 @@
+filter:
+  dependency_paths:
+    - "vendor/"
+  excluded_paths:
+    - 'test/'
+
+
 build:
-    tests:
+  nodes:
+    analysis:
+      tests:
         override:
-            - ./bin/phing unit || true
+          - command: './bin/phing unit'
+            coverage:
+              file:   'test/coverage.xml'
+              format: 'php-clover'

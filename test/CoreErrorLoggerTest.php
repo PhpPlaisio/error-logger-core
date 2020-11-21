@@ -381,7 +381,7 @@ class CoreErrorLoggerTest extends TestCase
       }
       catch (\Throwable $throwable)
       {
-        $this->errorLogger->dumpVars([$d]);
+        $this->errorLogger->dumpVars([$GLOBALS, $this, $d]);
         $this->errorLogger->logError($throwable);
       }
 

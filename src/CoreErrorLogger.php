@@ -207,84 +207,78 @@ abstract class CoreErrorLogger implements ErrorLogger
     $isAssoc = ($args!==array_values($args));
 
     $count = 0;
+    $out   = [];
     foreach ($args as $key => $value)
     {
       $count++;
       if ($count>=7)
       {
-        if ($count>7)
-        {
-          unset($args[$key]);
-        }
-        else
-        {
-          $args[$key] = '...';
-        }
-        continue;
+       $out[$key] = '...';
+       break;
       }
 
       if (is_object($value))
       {
-        $args[$key] = Html::generateElement('span', ['class' => 'class'], get_class($value));
+        $out[$key] = Html::generateElement('span', ['class' => 'class'], get_class($value));
       }
       elseif (is_bool($value))
       {
-        $args[$key] = Html::generateElement('span', ['class' => 'keyword'], ($value ? 'true' : 'false'));
+        $out[$key] = Html::generateElement('span', ['class' => 'keyword'], ($value ? 'true' : 'false'));
       }
       elseif (is_string($value))
       {
         if (mb_strlen($value)>32)
         {
-          $args[$key] = Html::generateElement('span',
-                                              ['class' => 'string',
-                                               'title' => mb_substr($value, 0, 512)],
-                                              mb_substr($value, 0, 32).'...');
+          $out[$key] = Html::generateElement('span',
+                                             ['class' => 'string',
+                                              'title' => mb_substr($value, 0, 512)],
+                                             mb_substr($value, 0, 32).'...');
         }
         else
         {
-          $args[$key] = Html::generateElement('span', ['class' => 'string'], $value);
+          $out[$key] = Html::generateElement('span', ['class' => 'string'], $value);
         }
       }
       elseif (is_array($value))
       {
-        $args[$key] = '['.$this->argumentsToString($value).']';
+        $out[$key] = '['.$this->argumentsToString($value).']';
       }
       elseif ($value===null)
       {
-        $args[$key] = '<span class="keyword">null</span>';
+        $out[$key] = '<span class="keyword">null</span>';
       }
       elseif (is_resource($value))
       {
-        $args[$key] = Html::generateElement('span', ['class' => 'keyword'], get_resource_type($value));
+        $out[$key] = Html::generateElement('span', ['class' => 'keyword'], get_resource_type($value));
       }
       elseif (is_numeric($value))
       {
-        $args[$key] = Html::generateElement('span', ['class' => 'number'], $value);
+        $out[$key] = Html::generateElement('span', ['class' => 'number'], $value);
       }
       else
       {
-        $args[$key] = '<span class="unknown">???</span>';
+        $out[$key] = '<span class="unknown">???</span>';
       }
 
       if (is_string($key))
       {
         $tmp = Html::generateElement('span', ['class' => 'string'], $key);
         $tmp .= ' => ';
-        $tmp .= (strpos($key, 'password')===false) ? $args[$key] : str_repeat('*', 12);
+        $tmp .= (strpos($key, 'password')===false) ? $out[$key] : str_repeat('*', 12);
 
-        $args[$key] = $tmp;
+        $out[$key] = $tmp;
       }
       elseif ($isAssoc)
       {
         $tmp = Html::generateElement('span', ['class' => 'number'], $key);
         $tmp .= ' => ';
-        $tmp .= $args[$key];
+        $tmp .= $out[$key];
 
-        $args[$key] = $tmp;
+        $out[$key] = $tmp;
       }
     }
 
-    return implode(', ', $args);
+    return implode(', ', $out);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
