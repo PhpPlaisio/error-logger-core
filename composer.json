@@ -10,10 +10,10 @@
   "require": {
     "php": ">=7.3",
     "ext-mbstring": "*",
-    "plaisio/error-logger": "^1.1",
+    "plaisio/error-logger": "^1.2",
     "plaisio/helper-html": "^1.2",
-    "plaisio/var-dumper": "^1.1",
-    "plaisio/var-dumper-writer": "^1.1"
+    "plaisio/var-dumper": "^1.2.1",
+    "plaisio/var-dumper-writer": "^1.1.1"
   },
   "require-dev": {
     "phing/phing": "^2.0",

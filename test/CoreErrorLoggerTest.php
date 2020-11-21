@@ -56,6 +56,27 @@ class CoreErrorLoggerTest extends TestCase
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Tests an object as argument is logged properly.
+   */
+  public function testClassWithoutComment(): void
+  {
+    try
+    {
+      $c = new TestClassC();
+      count($c);
+    }
+    catch (\Throwable $throwable)
+    {
+      $this->errorLogger->logError($throwable);
+    }
+
+    $output = $this->getOutput();
+
+    self::assertStringContainsString('</html>', $output);
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * Tests false as argument is logged properly.
    */
   public function testArgumentFalse(): void
