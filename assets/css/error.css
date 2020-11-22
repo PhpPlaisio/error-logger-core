@@ -130,7 +130,7 @@ code
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 /**
- * Argument types.
+ * Variable types.
  */
 .class
 {
@@ -157,7 +157,8 @@ code
   color: #11AABB;
 }
 
-.unknown
+.unknown,
+.uninitialized
 {
   color:      #F80C12;
   font-style: italic;

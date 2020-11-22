@@ -388,6 +388,7 @@ class CoreErrorLoggerTest extends TestCase
       $output = $this->getOutput();
 
       self::assertStringContainsString('<th class="string">qwerty</th>', $output);
+      self::assertStringContainsString('<span class="uninitialized">uninitialized</span>', $output);
       self::assertStringContainsString('</html>', $output);
     }
   }
@@ -418,7 +419,7 @@ class CoreErrorLoggerTest extends TestCase
   {
     $output = file_get_contents(TestErrorLogger::$filename);
 
-    unlink(TestErrorLogger::$filename);
+    // unlink(TestErrorLogger::$filename);
 
     return $output;
   }

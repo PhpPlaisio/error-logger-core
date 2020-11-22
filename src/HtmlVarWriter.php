@@ -199,6 +199,15 @@ class HtmlVarWriter implements VarWriter
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * {@inheritdoc}
+   */
+  public function writeUninitialized($name): void
+  {
+    $this->writeScalar(null, null, $name, 'uninitialized', 'uninitialized');
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * Writes the name of a variable.
    *
    * @param string|int|null $name The name of the variable.
@@ -269,8 +278,6 @@ class HtmlVarWriter implements VarWriter
     fwrite($this->handle, Html::generateElement('td', [], $html, true));
     fwrite($this->handle, '</tr>');
   }
-
-  //--------------------------------------------------------------------------------------------------------------------
 }
 
 //----------------------------------------------------------------------------------------------------------------------
