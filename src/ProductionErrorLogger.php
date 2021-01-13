@@ -14,7 +14,7 @@ class ProductionErrorLogger extends CoreErrorLogger
    *
    * @var string
    */
-  private $path;
+  private string $path;
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
