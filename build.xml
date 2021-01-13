@@ -1,13 +1,10 @@
 <project name="PhpPlaisio" default="build" basedir=".">
     <!-- Run composer update and executes various other updates -->
     <target name="update">
-        <exec command="composer update" checkreturn="true" passthru="true"/>
-    </target>
-
-    <!-- Runs ApiGen -->
-    <target name="apigen">
-        <exec command="apigen generate --todo --tree --source src --destination doc/api" passthru="true"
-              checkreturn="true"/>
+        <exec executable="composer" checkreturn="true" passthru="true">
+            <arg value="--ansi"/>
+            <arg value="update"/>
+        </exec>
     </target>
 
     <!-- Runs all unit tests -->
