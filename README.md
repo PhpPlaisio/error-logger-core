@@ -22,7 +22,7 @@
 <a href="https://packagist.org/packages/plaisio/error-logger-core"><img src="https://poser.pugx.org/plaisio/error-logger-core/v/stable" alt="Latest Stable Version"/></a>
 </td>
 <td>
-<a href="https://travis-ci.com/PhpPlaisio/error-logger-core"><img src="https://travis-ci.com/PhpPlaisio/error-logger-core.svg?branch=master" alt="Build Status"/></a><br/>
+<a href="https://travis-ci.com/PhpPlaisio/error-logger-core"><img src="https://app.travis-ci.com/PhpPlaisio/error-logger-core.svg?branch=master" alt="Build Status"/></a><br/>
 <a href="https://scrutinizer-ci.com/g/PhpPlaisio/error-logger-core/?branch=master"><img src="https://scrutinizer-ci.com/g/PhpPlaisio/error-logger-core/badges/coverage.png?b=master" alt="Code Coverage"/></a>
 </td>
 <td>
