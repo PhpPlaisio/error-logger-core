@@ -20,6 +20,7 @@ class HtmlVarWriter implements VarWriter
   protected $handle;
 
   //--------------------------------------------------------------------------------------------------------------------
+
   /**
    * Object constructor.
    *
@@ -73,7 +74,10 @@ class HtmlVarWriter implements VarWriter
       fwrite($this->handle, '<tr>');
       $this->writeName($name, $id);
       fwrite($this->handle, '<td>');
-      fwrite($this->handle, Html::generateElement('div', ['class' => 'array'], 'array').'<br/>');
+      fwrite($this->handle, Html::htmlNested(['tag'  => 'div',
+                                              'attr' => ['class' => 'array'],
+                                              'text' => 'array']));
+      fwrite($this->handle, '<br/>');
       fwrite($this->handle, '<table>');
     }
   }
@@ -84,13 +88,18 @@ class HtmlVarWriter implements VarWriter
    */
   public function writeArrayReference(int $ref, $name): void
   {
-    $html = Html::generateElement('span', ['class' => 'array'], 'array');
+    $html = Html::htmlNested(['tag'  => 'span',
+                              'attr' => ['class' => 'array'],
+                              'text' => 'array']);
     $html .= ', ';
-    $html .= Html::generateElement('a', ['href' => '#'.$ref], 'see '.$ref);
+    $html .= Html::htmlNested(['tag'  => 'a',
+                               'attr' => ['href' => '#'.$ref],
+                               'text' => 'see '.$ref]);
 
     fwrite($this->handle, '<tr>');
     $this->writeName($name);
-    fwrite($this->handle, Html::generateElement('td', [], $html, true));
+    fwrite($this->handle, Html::htmlNested(['tag'  => 'td',
+                                            'html' => $html]));
     fwrite($this->handle, '</tr>');
   }
 
@@ -155,7 +164,10 @@ class HtmlVarWriter implements VarWriter
       fwrite($this->handle, '<tr>');
       $this->writeName($name, $id);
       fwrite($this->handle, '<td>');
-      fwrite($this->handle, Html::generateElement('div', ['class' => 'class'], $class).'<br/>');
+      fwrite($this->handle, Html::htmlNested(['tag'  => 'div',
+                                              'attr' => ['class' => 'class'],
+                                              'text' => $class]));
+      fwrite($this->handle, '<br/>');
       fwrite($this->handle, '<table>');
     }
   }
@@ -166,13 +178,18 @@ class HtmlVarWriter implements VarWriter
    */
   public function writeObjectReference(int $ref, $name, string $class): void
   {
-    $html = Html::generateElement('span', ['class' => 'class'], $class);
+    $html = Html::htmlNested(['tag'  => 'span',
+                              'attr' => ['class' => 'class'],
+                              'text' => $class]);
     $html .= ', ';
-    $html .= Html::generateElement('a', ['href' => '#'.(string)$ref], 'see '.(string)$ref);
+    $html .= Html::htmlNested(['tag'  => 'a',
+                               'attr' => ['href' => '#'.$ref],
+                               'text' => 'see '.$ref]);
 
     fwrite($this->handle, '<tr>');
     $this->writeName($name);
-    fwrite($this->handle, Html::generateElement('td', [], $html, true));
+    fwrite($this->handle, Html::htmlNested(['tag'  => 'td',
+                                            'html' => $html]));
     fwrite($this->handle, '</tr>');
   }
 
@@ -217,7 +234,10 @@ class HtmlVarWriter implements VarWriter
   {
     if ($name===null || $name==='')
     {
-      fwrite($this->handle, Html::generateElement('th', ['class' => 'id', 'id' => $id], $id));
+      fwrite($this->handle, Html::htmlNested(['tag'  => 'th',
+                                              'attr' => ['class' => 'id',
+                                                         'id'    => $id],
+                                              'text' => $id]));
     }
     else
     {
@@ -242,13 +262,15 @@ class HtmlVarWriter implements VarWriter
         throw new \InvalidArgumentException(sprintf('$name has unexpected type %s', gettype($name)));
       }
 
-      fwrite($this->handle, Html::generateElement('th', ['class' => 'id'], $id));
+      fwrite($this->handle, Html::htmlNested(['tag'  => 'th',
+                                              'attr' => ['class' => 'id'],
+                                              'text' => $id]));
 
-      fwrite($this->handle, Html::generateElement('th',
-                                                  ['class' => $class,
-                                                   'id'    => $id,
-                                                   'title' => $title],
-                                                  $text));
+      fwrite($this->handle, Html::htmlNested(['tag'  => 'th',
+                                              'attr' => ['class' => $class,
+                                                         'id'    => $id,
+                                                         'title' => $title],
+                                              'text' => $text]));
     }
   }
 
@@ -266,16 +288,21 @@ class HtmlVarWriter implements VarWriter
    */
   private function writeScalar(?int $id, ?int $ref, $name, string $text, string $class, ?string $title = null)
   {
-    $html = Html::generateElement('span', ['class' => $class, 'title' => $title], $text);
+    $html = Html::htmlNested(['tag'  => 'span',
+                              'attr' => ['class' => $class, 'title' => $title],
+                              'text' => $text]);
     if ($ref!==null)
     {
       $html .= ', ';
-      $html .= Html::generateElement('a', ['href' => '#'.$ref], 'see '.$ref);
+      $html .= Html::htmlNested(['tag'  => 'a',
+                                 'attr' => ['href' => '#'.$ref],
+                                 'text' => 'see '.$ref]);
     }
 
     fwrite($this->handle, '<tr>');
     $this->writeName($name, $id);
-    fwrite($this->handle, Html::generateElement('td', [], $html, true));
+    fwrite($this->handle, Html::htmlNested(['tag'  => 'td',
+                                            'html' => $html]));
     fwrite($this->handle, '</tr>');
   }
 }

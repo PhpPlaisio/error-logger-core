@@ -129,22 +129,30 @@ abstract class CoreErrorLogger implements ErrorLogger
 
     if (!$isPrevious)
     {
-      fwrite($this->handle, Html::generateElement('h1', [], get_class($throwable)));
+      fwrite($this->handle, Html::htmlNested(['tag'  => 'h1',
+                                              'text' => get_class($throwable)]));
     }
     else
     {
-      fwrite($this->handle, Html::generateElement('h2', [], 'Previous Exception: '.get_class($throwable)));
+      fwrite($this->handle, Html::htmlNested(['tag'  => 'h2',
+                                              'text' => 'Previous Exception: '.get_class($throwable)]));
     }
 
     if (isset(self::$errorNames[$throwable->getCode()]))
     {
-      fwrite($this->handle, Html::generateElement('p', ['class' => 'code'], self::$errorNames[$throwable->getCode()]));
+      fwrite($this->handle, Html::htmlNested(['tag'  => 'p',
+                                              'attr' => ['class' => 'code'],
+                                              'text' => self::$errorNames[$throwable->getCode()]]));
     }
 
     $message = str_replace("\n", '<br/>', Html::txt2Html($throwable->getMessage()));
-    fwrite($this->handle, Html::generateElement('p', ['class' => 'message'], $message, true));
+    fwrite($this->handle, Html::htmlNested(['tag'  => 'p',
+                                            'attr' => ['class' => 'message'],
+                                            'html' => $message]));
 
-    fwrite($this->handle, Html::generateElement('p', ['class' => 'file'], $throwable->getFile().'('.$throwable->getLine().')'));
+    fwrite($this->handle, Html::htmlNested(['tag'  => 'p',
+                                            'attr' => ['class' => 'file'],
+                                            'text' => $throwable->getFile().'('.$throwable->getLine().')']));
 
     $this->echoFileSnippet($throwable->getFile(), $throwable->getLine());
 
@@ -162,7 +170,7 @@ abstract class CoreErrorLogger implements ErrorLogger
     fwrite($this->handle, '<!DOCTYPE html>');
     fwrite($this->handle, '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">');
     fwrite($this->handle, '<head>');
-    fwrite($this->handle, Html::generateVoidElement('meta', ['charset' => Html::$encoding]));
+    fwrite($this->handle, Html::htmlNested(['tag' => 'meta', 'attr' => ['charset' => Html::$encoding]]));
     fwrite($this->handle, '<title>Exception</title>');
 
     fwrite($this->handle, '<style>');
@@ -189,7 +197,7 @@ abstract class CoreErrorLogger implements ErrorLogger
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Opens the stream to were the error log must be written.
+   * Opens the stream to where the error log must be written.
    *
    * @return void
    */
@@ -220,24 +228,30 @@ abstract class CoreErrorLogger implements ErrorLogger
 
       if (is_object($value))
       {
-        $out[$key] = Html::generateElement('span', ['class' => 'class'], get_class($value));
+        $out[$key] = Html::htmlNested(['tag'  => 'span',
+                                       'attr' => ['class' => 'class'],
+                                       'text' => get_class($value)]);
       }
       elseif (is_bool($value))
       {
-        $out[$key] = Html::generateElement('span', ['class' => 'keyword'], ($value ? 'true' : 'false'));
+        $out[$key] = Html::htmlNested(['tag'  => 'span',
+                                       'attr' => ['class' => 'keyword'],
+                                       'text' => ($value ? 'true' : 'false')]);
       }
       elseif (is_string($value))
       {
         if (mb_strlen($value)>32)
         {
-          $out[$key] = Html::generateElement('span',
-                                             ['class' => 'string',
-                                              'title' => mb_substr($value, 0, 512)],
-                                             mb_substr($value, 0, 32).'...');
+          $out[$key] = Html::htmlNested(['tag'  => 'span',
+                                         'attr' => ['class' => 'string',
+                                                    'title' => mb_substr($value, 0, 512)],
+                                         'text' => mb_substr($value, 0, 32).'...']);
         }
         else
         {
-          $out[$key] = Html::generateElement('span', ['class' => 'string'], $value);
+          $out[$key] = Html::htmlNested(['tag'  => 'span',
+                                         'attr' => ['class' => 'string'],
+                                         'text' => $value]);
         }
       }
       elseif (is_array($value))
@@ -250,11 +264,15 @@ abstract class CoreErrorLogger implements ErrorLogger
       }
       elseif (is_resource($value))
       {
-        $out[$key] = Html::generateElement('span', ['class' => 'keyword'], get_resource_type($value));
+        $out[$key] = Html::htmlNested(['tag'  => 'span',
+                                       'attr' => ['class' => 'keyword'],
+                                       'text' => get_resource_type($value)]);
       }
       elseif (is_numeric($value))
       {
-        $out[$key] = Html::generateElement('span', ['class' => 'number'], $value);
+        $out[$key] = Html::htmlNested(['tag'  => 'span',
+                                       'attr' => ['class' => 'number'],
+                                       'text' => $value]);
       }
       else
       {
@@ -263,7 +281,9 @@ abstract class CoreErrorLogger implements ErrorLogger
 
       if (is_string($key))
       {
-        $tmp = Html::generateElement('span', ['class' => 'string'], $key);
+        $tmp = Html::htmlNested(['tag'  => 'span',
+                                 'attr' => ['class' => 'string'],
+                                 'text' => $key]);
         $tmp .= ' => ';
         $tmp .= (strpos($key, 'password')===false) ? $out[$key] : str_repeat('*', 12);
 
@@ -271,7 +291,9 @@ abstract class CoreErrorLogger implements ErrorLogger
       }
       elseif ($isAssoc)
       {
-        $tmp = Html::generateElement('span', ['class' => 'number'], $key);
+        $tmp = Html::htmlNested(['tag'  => 'span',
+                                 'attr' => ['class' => 'number'],
+                                 'text' => $key]);
         $tmp .= ' => ';
         $tmp .= $out[$key];
 
@@ -292,13 +314,19 @@ abstract class CoreErrorLogger implements ErrorLogger
   {
     if (isset($item['class']))
     {
-      fwrite($this->handle, Html::generateElement('span', ['class' => 'class'], $item['class']));
+      fwrite($this->handle, Html::htmlNested(['tag'  => 'span',
+                                              'attr' => ['class' => 'class'],
+                                              'text' => $item['class']]));
       fwrite($this->handle, '::');
-      fwrite($this->handle, Html::generateElement('span', ['class' => 'function'], $item['function']));
+      fwrite($this->handle, Html::htmlNested(['tag'  => 'span',
+                                              'attr' => ['class' => 'function'],
+                                              'text' => $item['function']]));
     }
     else
     {
-      fwrite($this->handle, Html::generateElement('span', ['class' => 'function'], $item['function']));
+      fwrite($this->handle, Html::htmlNested(['tag'  => 'span',
+                                              'attr' => ['class' => 'function'],
+                                              'text' => $item['function']]));
     }
 
     fwrite($this->handle, '(');
@@ -323,7 +351,8 @@ abstract class CoreErrorLogger implements ErrorLogger
 
     // div with lines numbers.
     fwrite($this->handle, '<div class="lines">');
-    fwrite($this->handle, Html::generateTag('ol', ['start' => $first]));
+    fwrite($this->handle, str_replace('/>', '>', Html::htmlNested(['tag'  => 'ol',
+                                                                   'attr' => ['start' => $first]])));
     for ($i = $first; $i<=$last; $i++)
     {
       fwrite($this->handle, '<li></li>');
@@ -342,10 +371,13 @@ abstract class CoreErrorLogger implements ErrorLogger
 
     // div for markup.
     fwrite($this->handle, '<div class="markup">');
-    fwrite($this->handle, Html::generateTag('ol', ['start' => $first]));
+    fwrite($this->handle, str_replace('/>', '>', Html::htmlNested(['tag'  => 'ol',
+                                                                   'attr' => ['start' => $first]])));
     for ($i = $first; $i<=$last; $i++)
     {
-      fwrite($this->handle, Html::generateElement('li', ['class' => ($i==$line) ? 'error' : null], ''));
+      fwrite($this->handle, Html::htmlNested(['tag'  => 'li',
+                                              'attr' => ['class' => ($i==$line) ? 'error' : null],
+                                              'html' => null]));
     }
     fwrite($this->handle, '</ol>');
     fwrite($this->handle, '</div>');
@@ -364,11 +396,15 @@ abstract class CoreErrorLogger implements ErrorLogger
   {
     fwrite($this->handle, '<p class="file">');
 
-    fwrite($this->handle, Html::generateElement('span', ['class' => 'level'], $number));
+    fwrite($this->handle, Html::htmlNested(['tag'  => 'span',
+                                            'attr' => ['class' => 'level'],
+                                            'text' => $number]));
 
     if (isset($item['file']))
     {
-      fwrite($this->handle, Html::generateElement('span', ['class' => 'file'], $item['file'].'('.$item['line'].'):'));
+      fwrite($this->handle, Html::htmlNested(['tag'  => 'span',
+                                              'attr' => ['class' => 'file'],
+                                              'text' => $item['file'].'('.$item['line'].'):']));
     }
 
     $this->echoCallable($item);
@@ -412,10 +448,11 @@ abstract class CoreErrorLogger implements ErrorLogger
    */
   private function echoVarDump(): void
   {
-    // Return immediately if the are no variables to dump.
+    // Return immediately if there are no variables to dump.
     if ($this->dump===null) return;
 
-    fwrite($this->handle, Html::generateElement('h2', [], 'VarDump'));
+    fwrite($this->handle, Html::htmlNested(['tag'  => 'h2',
+                                            'text' => 'VarDump']));
 
     $varDumper = new VarDumper(new HtmlVarWriter($this->handle));
     $varDumper->dump('', $this->dump, $this->scalarReferences);

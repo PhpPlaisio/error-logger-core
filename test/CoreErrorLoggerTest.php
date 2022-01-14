@@ -233,7 +233,7 @@ class CoreErrorLoggerTest extends TestCase
     try
     {
       $c = new TestClassC();
-      count($c);
+      $c->count();
     }
     catch (\Throwable $throwable)
     {
@@ -395,7 +395,7 @@ class CoreErrorLoggerTest extends TestCase
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Performs common assertions on the out put of the error logger.
+   * Performs common assertions on the output of the error logger.
    *
    * @param string $output The output of the error logger.
    */

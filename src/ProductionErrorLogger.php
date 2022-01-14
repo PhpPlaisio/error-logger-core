@@ -51,8 +51,6 @@ class ProductionErrorLogger extends CoreErrorLogger
    * Returns the filename of the error log file.
    *
    * @return string
-   *
-   * @throws \Exception
    */
   private function getFilename(): string
   {
