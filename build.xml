@@ -32,5 +32,6 @@
     <target name="unit">
         <exec executable="bin/phpunit" passthru="true" checkreturn="true"/>
     </target>
+
     <target name="build"/>
 </project>
