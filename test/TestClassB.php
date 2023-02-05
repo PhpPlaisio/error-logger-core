@@ -17,7 +17,7 @@ class TestClassB
    *
    * @param mixed $arg Just a argument.
    */
-  public function methodB($arg): void
+  public function methodB(mixed $arg): void
   {
     switch (self::$type)
     {

@@ -41,24 +41,23 @@ abstract class CoreErrorLogger implements ErrorLogger
    *
    * @var array|null
    */
-  private $dump;
+  private ?array $dump = null;
 
   /**
    * The number of source lines shown.
    *
    * @var int
    */
-  private $numberOfSourceLines = 24;
+  private int $numberOfSourceLines = 24;
 
   /**
    * If true scalar references to values must be traced.
    *
    * @var bool
    */
-  private $scalarReferences;
+  private bool $scalarReferences;
 
   //--------------------------------------------------------------------------------------------------------------------
-
   /**
    * Main function for dumping.
    *
@@ -68,7 +67,7 @@ abstract class CoreErrorLogger implements ErrorLogger
    * @api
    * @since 1.0.0
    */
-  public function dumpVars($dump, bool $scalarReferences = false): void
+  public function dumpVars(mixed $dump, bool $scalarReferences = false): void
   {
     $this->dump             = $dump;
     $this->scalarReferences = $scalarReferences;
@@ -90,26 +89,22 @@ abstract class CoreErrorLogger implements ErrorLogger
     try
     {
       $this->openStream();
-
       $this->echoPageLeader();
-
       $this->echoErrorLog($throwable);
-
       $this->echoVarDump();
-
       $this->echoPageTrailer();
-
       $this->closeStream();
     }
     catch (\Throwable $throwable)
     {
       // Nothing to do.
+      print($throwable->getMessage());
     }
   }
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Closes the stream to were the error log is written written.
+   * Closes the stream were the error log is written to.
    *
    * @return void
    */

@@ -20,7 +20,6 @@ class HtmlVarWriter implements VarWriter
   protected $handle;
 
   //--------------------------------------------------------------------------------------------------------------------
-
   /**
    * Object constructor.
    *
@@ -143,7 +142,7 @@ class HtmlVarWriter implements VarWriter
   /**
    * {@inheritdoc}
    */
-  public function writeObjectClose(int $id, $name, string $class): void
+  public function writeObjectClose(int $id, mixed $name, string $class): void
   {
     if ($name!==null)
     {
@@ -157,7 +156,7 @@ class HtmlVarWriter implements VarWriter
   /**
    * {@inheritdoc}
    */
-  public function writeObjectOpen(int $id, $name, string $class): void
+  public function writeObjectOpen(int $id, mixed $name, string $class): void
   {
     if ($name!==null)
     {
@@ -176,7 +175,7 @@ class HtmlVarWriter implements VarWriter
   /**
    * {@inheritdoc}
    */
-  public function writeObjectReference(int $ref, $name, string $class): void
+  public function writeObjectReference(int $ref, mixed $name, string $class): void
   {
     $html = Html::htmlNested(['tag'  => 'span',
                               'attr' => ['class' => 'class'],
@@ -197,7 +196,7 @@ class HtmlVarWriter implements VarWriter
   /**
    * {@inheritdoc}
    */
-  public function writeResource(?int $id, ?int $ref, $name, string $type): void
+  public function writeResource(?int $id, ?int $ref, mixed $name, string $type): void
   {
     $this->writeScalar($id, $ref, $name, $type, 'keyword');
   }
@@ -206,7 +205,7 @@ class HtmlVarWriter implements VarWriter
   /**
    * {@inheritdoc}
    */
-  public function writeString(?int $id, ?int $ref, string &$value, $name): void
+  public function writeString(?int $id, ?int $ref, string &$value, mixed $name): void
   {
     $text  = mb_strimwidth($value, 0, 80, '...');
     $title = ($text!=$value) ? mb_strimwidth($value, 0, 512, '...') : null;
@@ -218,7 +217,7 @@ class HtmlVarWriter implements VarWriter
   /**
    * {@inheritdoc}
    */
-  public function writeUninitialized($name): void
+  public function writeUninitialized(mixed $name): void
   {
     $this->writeScalar(null, null, $name, 'uninitialized', 'uninitialized');
   }
@@ -230,7 +229,7 @@ class HtmlVarWriter implements VarWriter
    * @param string|int|null $name The name of the variable.
    * @param int|null        $id   The ID of the value.
    */
-  private function writeName($name, ?int $id = null): void
+  private function writeName(mixed $name, ?int $id = null): void
   {
     if ($name===null || $name==='')
     {
@@ -286,7 +285,7 @@ class HtmlVarWriter implements VarWriter
    * @param string          $class The class of the value.
    * @param string|null     $title The title for the value.
    */
-  private function writeScalar(?int $id, ?int $ref, $name, string $text, string $class, ?string $title = null)
+  private function writeScalar(?int $id, ?int $ref, mixed $name, string $text, string $class, ?string $title = null)
   {
     $html = Html::htmlNested(['tag'  => 'span',
                               'attr' => ['class' => $class, 'title' => $title],

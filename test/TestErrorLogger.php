@@ -11,7 +11,7 @@ use Plaisio\ErrorLogger\CoreErrorLogger;
 class TestErrorLogger extends CoreErrorLogger
 {
   //--------------------------------------------------------------------------------------------------------------------
-  public static $filename = 'test.html';
+  public static string $filename = 'test.html';
 
   //--------------------------------------------------------------------------------------------------------------------
   /**

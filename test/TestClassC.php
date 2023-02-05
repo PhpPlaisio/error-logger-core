@@ -12,7 +12,7 @@ class TestClassC implements \Countable
   /**
    * Does not count.
    */
-  public function count()
+  public function count(): int
   {
     throw new \RuntimeException();
   }

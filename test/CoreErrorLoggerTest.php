@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Plaisio\ErrorLogger\Test;
 
 use PHPUnit\Framework\TestCase;
-use Plaisio\ErrorLogger\CoreErrorLogger;
 
 /**
  * Test cases for DevelopmentErrorLogger.
@@ -15,9 +14,16 @@ class CoreErrorLoggerTest extends TestCase
   /**
    * The error logger.
    *
-   * @var CoreErrorLogger
+   * @var TestErrorLogger
    */
-  protected $errorLogger;
+  protected TestErrorLogger $errorLogger;
+
+  /**
+   * Whether to debug the output.
+   *
+   * @var bool
+   */
+  private bool $debug = false;
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
@@ -47,8 +53,7 @@ class CoreErrorLoggerTest extends TestCase
       $this->errorLogger->logError($throwable);
     }
 
-    $output = $this->getOutput();
-
+    $output = $this->getOutput(__LINE__);
     $this->defaultAssertions($output);
 
     self::assertStringContainsString('<span class="class">Plaisio\ErrorLogger\Test\CoreErrorLoggerTest</span>', $output);
@@ -71,7 +76,7 @@ class CoreErrorLoggerTest extends TestCase
       $this->errorLogger->logError($throwable);
     }
 
-    $output = $this->getOutput();
+    $output = $this->getOutput(__LINE__);
 
     $this->defaultAssertions($output);
 
@@ -95,7 +100,7 @@ class CoreErrorLoggerTest extends TestCase
       $this->errorLogger->logError($throwable);
     }
 
-    $output = $this->getOutput();
+    $output = $this->getOutput(__LINE__);
 
     $this->defaultAssertions($output);
 
@@ -119,7 +124,7 @@ class CoreErrorLoggerTest extends TestCase
       $this->errorLogger->logError($throwable);
     }
 
-    $output = $this->getOutput();
+    $output = $this->getOutput(__LINE__);
 
     $this->defaultAssertions($output);
 
@@ -143,7 +148,7 @@ class CoreErrorLoggerTest extends TestCase
       $this->errorLogger->logError($throwable);
     }
 
-    $output = $this->getOutput();
+    $output = $this->getOutput(__LINE__);
 
     $this->defaultAssertions($output);
 
@@ -169,7 +174,7 @@ class CoreErrorLoggerTest extends TestCase
       $this->errorLogger->logError($throwable);
     }
 
-    $output = $this->getOutput();
+    $output = $this->getOutput(__LINE__);
 
     $this->defaultAssertions($output);
 
@@ -193,7 +198,7 @@ class CoreErrorLoggerTest extends TestCase
       $this->errorLogger->logError($throwable);
     }
 
-    $output = $this->getOutput();
+    $output = $this->getOutput(__LINE__);
 
     $this->defaultAssertions($output);
 
@@ -217,7 +222,7 @@ class CoreErrorLoggerTest extends TestCase
       $this->errorLogger->logError($throwable);
     }
 
-    $output = $this->getOutput();
+    $output = $this->getOutput(__LINE__);
 
     $this->defaultAssertions($output);
 
@@ -240,7 +245,7 @@ class CoreErrorLoggerTest extends TestCase
       $this->errorLogger->logError($throwable);
     }
 
-    $output = $this->getOutput();
+    $output = $this->getOutput(__LINE__);
 
     self::assertStringContainsString('</html>', $output);
   }
@@ -262,7 +267,7 @@ class CoreErrorLoggerTest extends TestCase
       $this->errorLogger->logError($throwable);
     }
 
-    $output = $this->getOutput();
+    $output = $this->getOutput(__LINE__);
 
     $this->defaultAssertions($output);
   }
@@ -284,7 +289,7 @@ class CoreErrorLoggerTest extends TestCase
       $this->errorLogger->logError($throwable);
     }
 
-    $output = $this->getOutput();
+    $output = $this->getOutput(__LINE__);
 
     $this->defaultAssertions($output);
   }
@@ -306,7 +311,7 @@ class CoreErrorLoggerTest extends TestCase
       $this->errorLogger->logError($throwable);
     }
 
-    $output = $this->getOutput();
+    $output = $this->getOutput(__LINE__);
 
     $this->defaultAssertions($output);
   }
@@ -331,7 +336,7 @@ class CoreErrorLoggerTest extends TestCase
       $this->errorLogger->logError($throwable);
     }
 
-    $output = $this->getOutput();
+    $output = $this->getOutput(__LINE__);
 
     self::assertStringContainsString('<html ', $output);
     self::assertStringContainsString('</html>', $output);
@@ -356,7 +361,7 @@ class CoreErrorLoggerTest extends TestCase
       $this->errorLogger->logError($throwable);
     }
 
-    $output = $this->getOutput();
+    $output = $this->getOutput(__LINE__);
 
     $this->defaultAssertions($output);
   }
@@ -385,7 +390,7 @@ class CoreErrorLoggerTest extends TestCase
         $this->errorLogger->logError($throwable);
       }
 
-      $output = $this->getOutput();
+      $output = $this->getOutput(__LINE__);
 
       self::assertStringContainsString('<th class="string">qwerty</th>', $output);
       self::assertStringContainsString('<span class="uninitialized">uninitialized</span>', $output);
@@ -413,13 +418,20 @@ class CoreErrorLoggerTest extends TestCase
   /**
    * Returns the output of the error logger.
    *
+   * @param int $line The line number from where this method has been called.
+   *
    * @return string
    */
-  private function getOutput(): string
+  private function getOutput(int $line): string
   {
     $output = file_get_contents(TestErrorLogger::$filename);
 
-    // unlink(TestErrorLogger::$filename);
+    if ($this->debug)
+    {
+      copy(TestErrorLogger::$filename, sprintf('test-%d.html', $line));
+    }
+
+    unlink(TestErrorLogger::$filename);
 
     return $output;
   }
