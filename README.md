@@ -22,8 +22,8 @@
 <a href="https://packagist.org/packages/plaisio/error-logger-core"><img src="https://poser.pugx.org/plaisio/error-logger-core/v/stable" alt="Latest Stable Version"/></a>
 </td>
 <td>
-<a href="https://app.travis-ci.com/github/PhpPlaisio/error-logger-core"><img src="https://app.travis-ci.com/PhpPlaisio/error-logger-core.svg?branch=master" alt="Build Status"/></a><br/>
-<a href="https://scrutinizer-ci.com/g/PhpPlaisio/error-logger-core/?branch=master"><img src="https://scrutinizer-ci.com/g/PhpPlaisio/error-logger-core/badges/coverage.png?b=master" alt="Code Coverage"/></a>
+<a href="https://github.com/PhpPlaisio/function testerror-logger-core/actions/workflows/unit.yml"><img src="https://github.com/PhpPlaisio/function testerror-logger-core/actions/workflows/unit.yml/badge.svg" alt="Build Status"/></a><br/>
+<a href="https://codecov.io/gh/PhpPlaisio/function testerror-logger-core"><img src="https://codecov.io/gh/PhpPlaisio/function testerror-logger-core/branch/master/graph/badge.svg" alt="Code Coverage"/></a>
 </td>
 <td>
 <a href="https://scrutinizer-ci.com/g/PhpPlaisio/error-logger-core/?branch=master"><img src="https://scrutinizer-ci.com/g/PhpPlaisio/error-logger-core/badges/quality-score.png?b=master" alt="Scrutinizer Code Quality"/></a>
