@@ -98,7 +98,6 @@ abstract class CoreErrorLogger implements ErrorLogger
     catch (\Throwable $throwable)
     {
       // Nothing to do.
-      print($throwable->getMessage());
     }
   }
 
