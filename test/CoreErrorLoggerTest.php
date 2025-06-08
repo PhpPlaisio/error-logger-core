@@ -33,6 +33,8 @@ class CoreErrorLoggerTest extends TestCase
   {
     parent::setUp();
 
+    ini_set('zend.exception_ignore_args', false);
+
     $this->errorLogger = new TestErrorLogger();
   }
 

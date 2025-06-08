@@ -95,7 +95,7 @@ abstract class CoreErrorLogger implements ErrorLogger
       $this->echoPageTrailer();
       $this->closeStream();
     }
-    catch (\Throwable $throwable)
+    catch (\Throwable)
     {
       // Nothing to do.
     }
@@ -119,7 +119,10 @@ abstract class CoreErrorLogger implements ErrorLogger
   protected function echoErrorLog(?\Throwable $throwable, bool $isPrevious = false): void
   {
     // Return immediately if there is not throwable.
-    if ($throwable===null) return;
+    if ($throwable===null)
+    {
+      return;
+    }
 
     if (!$isPrevious)
     {
@@ -422,7 +425,10 @@ abstract class CoreErrorLogger implements ErrorLogger
     $trace = $throwable->getTrace();
 
     // Return immediately if the trace is empty.
-    if (empty($trace)) return;
+    if (empty($trace))
+    {
+      return;
+    }
 
     fwrite($this->handle, '<div class="trace">');
     fwrite($this->handle, '<h2>Stack Trace</h2>');
@@ -443,7 +449,10 @@ abstract class CoreErrorLogger implements ErrorLogger
   private function echoVarDump(): void
   {
     // Return immediately if there are no variables to dump.
-    if ($this->dump===null) return;
+    if ($this->dump===null)
+    {
+      return;
+    }
 
     fwrite($this->handle, Html::htmlNested(['tag'  => 'h2',
                                             'text' => 'VarDump']));

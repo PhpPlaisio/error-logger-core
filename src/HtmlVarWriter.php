@@ -250,10 +250,10 @@ class HtmlVarWriter implements VarWriter
       elseif (is_string($name))
       {
         $class = 'string';
-        $text  = mb_strimwidth((string)$name, 0, 20, '...');
+        $text  = mb_strimwidth($name, 0, 20, '...');
         if ($text!=$name)
         {
-          $title = mb_strimwidth((string)$name, 0, 512, '...');
+          $title = mb_strimwidth($name, 0, 512, '...');
         }
       }
       else
@@ -285,7 +285,12 @@ class HtmlVarWriter implements VarWriter
    * @param string          $class The class of the value.
    * @param string|null     $title The title for the value.
    */
-  private function writeScalar(?int $id, ?int $ref, mixed $name, string $text, string $class, ?string $title = null)
+  private function writeScalar(?int    $id,
+                               ?int    $ref,
+                               mixed   $name,
+                               string  $text,
+                               string  $class,
+                               ?string $title = null): void
   {
     $html = Html::htmlNested(['tag'  => 'span',
                               'attr' => ['class' => $class, 'title' => $title],
